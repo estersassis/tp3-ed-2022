@@ -1,5 +1,6 @@
 #include "Registers.hpp"
 #include <iostream>
+#include <sstream>
 #include <stdio.h>
 #include <sys/resource.h>
 
@@ -21,8 +22,10 @@ Registers::~Registers(){}
 
 // QUICK SORT RECURSSIVO
 
-double Registers::getTotalTime(){
-    return this->totalTime;
+std::string Registers::getMetrics(){
+    
+    std::string s = std::to_string(this->totalTime) + " " + std::to_string(this->copyValue) + " " + std::to_string(this->compValue);
+    return s;
 }
 
 void Registers::partitionRecursive(int left, int right, int *i, int *j) {
@@ -34,15 +37,20 @@ void Registers::partitionRecursive(int left, int right, int *i, int *j) {
 
     do
     {
-        while (x.getKey() > this->regs[*i].getKey())
+        while (x.getKey() > this->regs[*i].getKey()){
             (*i)++;
-        while (x.getKey() < this->regs[*j].getKey())
+            this->compValue++;
+        }
+        while (x.getKey() < this->regs[*j].getKey()){
             (*j)--;
+            this->compValue++;
+        }
 
         if (*i <= *j) {
             w = this->regs[*i];
             this->regs[*i] = this->regs[*j];
             this->regs[*j] = w;
+            this->copyValue++;
             (*i)++;
             (*j)--;
         }
@@ -54,10 +62,14 @@ void Registers::ordinationRecursive(int left, int right)
     int i, j;
 
     this->partitionRecursive(left, right, &i, &j);
-    if (left < j)
+    if (left < j) {
+        this->compValue++;
         this->ordinationRecursive(left, j);
-    if (i < right)
+    }
+    if (i < right) {
+        this->compValue++;
         this->ordinationRecursive(i, right);
+    }
 }
 
 void Registers::quickSortRecursive() {
@@ -90,6 +102,8 @@ int Registers::chooseRandonMedian(int k, int left, int right)
         for (int j = 1; j < k - i; j++)
             if (aux[j] < aux[j - 1])
             {
+                this->compValue++;
+                this->copyValue++;
                 int ch = aux[j - 1];
                 aux[j - 1] = aux[j];
                 aux[j] = ch;
@@ -110,16 +124,22 @@ void Registers::partitionMedian(int left, int right, int *i, int *j, int k)
 
     do
     {
-        while (x > this->regs[*i].getKey())
+        while (x > this->regs[*i].getKey()){
             (*i)++;
-        while (x < this->regs[*j].getKey())
+            this->compValue++;
+        }
+            
+        while (x < this->regs[*j].getKey()){
             (*j)--;
+            this->compValue++;
+        }
 
         if (*i <= *j)
         {
             w = this->regs[*i];
             this->regs[*i] = this->regs[*j];
             this->regs[*j] = w;
+            this->copyValue++;
             (*i)++;
             (*j)--;
         }
@@ -131,10 +151,14 @@ void Registers::ordinationMedian(int left, int right, int k)
     int i, j;
 
     this->partitionMedian(left, right, &i, &j, k);
-    if (left < j)
+    if (left < j) {
+        this->compValue++;
         this->ordinationMedian(left, j, k);
-    if (i < right)
+    }
+    if (i < right) {
+        this->compValue++;
         this->ordinationMedian(i, right, k);
+    }
 }
 
 void Registers::quickSortMedian(int k)
@@ -162,13 +186,17 @@ void Registers::selectSort(int left, int right) {
     for (i = left; i < n - 1; i++) {
         Min = i;
         for (j = i + 1; j < n; j++) {
-            if (this->regs[j].getKey() < this->regs[Min].getKey())
+            if (this->regs[j].getKey() < this->regs[Min].getKey()) {
+                this->compValue++;
+                this->copyValue++;
                 Min = j;
+            }
         }
 
         Register aux = this->regs[i];
         this->regs[i] = this->regs[Min];
         this->regs[Min] = aux;
+        this->copyValue++;
     }
 }
 
@@ -176,14 +204,19 @@ void Registers::ordinationSelection(int left, int right, int m) {
     int i, j;
 
     if (right - left + 1 == m) {
+        this->compValue++;
         this->selectSort(left, right);
     }
     else {
         this->partitionRecursive(left, right, &i, &j);
-        if (left < j)
+        if (left < j) {
+            this->compValue++;
             this->ordinationSelection(left, j, m);
-        if (i < right)
+        }
+        if (i < right) {
+            this->compValue++;
             this->ordinationSelection(i, right, m);
+        }
     }
 }
 
@@ -246,27 +279,34 @@ void Registers::ordinationSmartStack()
     do
         if (right > left)
         {
+            this->compValue++;
             this->partitionRecursive(left, right, &i, &j);
             if ((j - left) > (right - i))
             {
+                this->compValue++;
                 item.right = j;
                 item.left = left;
                 stack.Empilha(item);
                 left = i;
+                this->copyValue++;
             }
             else
             {
+                this->compValue++;
                 item.left = i;
                 item.right = right;
                 stack.Empilha(item);
                 right = j;
+                this->copyValue++;
             }
         }
         else
         {
+            this->compValue++;
             stack.Desempilha();
             right = item.right;
             left = item.left;
+            this->copyValue++;
         }
     while (stack.size != 0);
 }
@@ -304,27 +344,34 @@ void Registers::ordinationNonRecursive()
     do
         if (right > left)
         {
+            this->compValue++;
             this->partitionRecursive(left, right, &i, &j);
             if ((j - left) < (right - i))
             {
+                this->compValue++;
                 item.right = j;
                 item.left = left;
                 stack.Empilha(item);
                 left = i;
+                this->copyValue++;
             }
             else
             {
+                this->compValue++;
                 item.left = i;
                 item.right = right;
                 stack.Empilha(item);
                 right = j;
+                this->copyValue++;
             }
         }
         else
         {
+            this->compValue++;
             stack.Desempilha();
             right = item.right;
             left = item.left;
+            this->copyValue++;
         }
     while (stack.size != 0);
 }
@@ -356,13 +403,18 @@ void Registers::remake(int left, int right)
     while (j <= right)
     {
         if (j < right)
-            if (this->regs[j].getKey() < this->regs[j + 1].getKey())
+            if (this->regs[j].getKey() < this->regs[j + 1].getKey()) {
+                this->compValue++;
                 j++;
-        if (x.getKey() >= this->regs[j].getKey())
+            }
+        if (x.getKey() >= this->regs[j].getKey()) {
+            this->compValue++;
             break;
+        }
         this->regs[i] = this->regs[j];
         i = j;
         j = i * 2;
+        this->copyValue++;
     }
     this->regs[i] = x;
 }
@@ -399,6 +451,7 @@ void Registers::heapSort()
         this->regs[right] = x;
         right--;
         remake(left, right);
+        this->copyValue++;
     }
 
     if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
@@ -417,10 +470,14 @@ void Registers::merge(int left, int mid, int right)
     auto *leftArray = new Register[subArrayOne],
          *rightArray = new Register[subArrayTwo];
 
-    for (auto i = 0; i < subArrayOne; i++)
+    for (auto i = 0; i < subArrayOne; i++) {
         leftArray[i] = this->regs[left + i].getKey();
-    for (auto j = 0; j < subArrayTwo; j++)
+        this->copyValue++;
+    }
+    for (auto j = 0; j < subArrayTwo; j++) {
         rightArray[j] = this->regs[mid + 1 + j].getKey();
+        this->copyValue++;
+    }
 
     auto indexOfSubArrayOne = 0,   
         indexOfSubArrayTwo = 0;  
@@ -430,12 +487,16 @@ void Registers::merge(int left, int mid, int right)
     {
         if (leftArray[indexOfSubArrayOne].getKey() <= rightArray[indexOfSubArrayTwo].getKey())
         {
+            this->compValue++;
             this->regs[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
+            this->copyValue++;
             indexOfSubArrayOne++;
         }
         else
         {
+            this->compValue++;
             this->regs[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
+            this->copyValue++;
             indexOfSubArrayTwo++;
         }
         indexOfMergedArray++;
@@ -444,6 +505,7 @@ void Registers::merge(int left, int mid, int right)
     while (indexOfSubArrayOne < subArrayOne)
     {
         this->regs[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
+        this->copyValue++;
         indexOfSubArrayOne++;
         indexOfMergedArray++;
     }
@@ -451,6 +513,7 @@ void Registers::merge(int left, int mid, int right)
     while (indexOfSubArrayTwo < subArrayTwo)
     {
         this->regs[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
+        this->copyValue++;
         indexOfSubArrayTwo++;
         indexOfMergedArray++;
     }
@@ -462,6 +525,7 @@ void Registers::ordinationMerge(int left, int right)
 {
     if (left < right)
     {
+        this->compValue++;
         int mid = left + (right - left) / 2;
         ordinationMerge(left, mid);
         ordinationMerge(mid + 1, right);

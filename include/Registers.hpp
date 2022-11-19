@@ -11,7 +11,7 @@ class Registers
         ~Registers();
 
         int getSize();
-        double getTotalTime();
+        std::string getMetrics();
 
         void quickSortRecursive();
         void partitionRecursive(int left, int right, int *i, int *j);

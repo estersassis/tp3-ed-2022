@@ -129,7 +129,7 @@ int main(int argc, char **argv)
             default:
                 break;
         }
-        file << regs.getTotalTime() << std::endl;
+        file << regs.getMetrics() << std::endl;
     }
 
     file.close();
