@@ -91,29 +91,31 @@ int main(int argc, char **argv)
             case QSRECURSIVE:
             {
                 regs.quickSortRecursive();
-                file << regs.getTotalTime() << std::endl;
+                break;
             }
             case QSMEDIAN:
             {
                 regs.quickSortMedian(k);
-                file << regs.getTotalTime() << std::endl;
+                break;
             }
             case QSSELECTION:
             {
                 regs.quickSortSelection(m);
-                file << regs.getTotalTime() << std::endl;
+                break;
             }
             case QSINTERACTIVE:
             {
                 regs.quickSortNonRecursive();
-                file << regs.getTotalTime() << std::endl;
+                break;
             }
             case QSINTERACTIVESMART:
             {
                 regs.quickSortSmartStack();
-                file << regs.getTotalTime() << std::endl;
+                break;
             }
         }
+
+        file << regs.getTotalTime() << std::endl;
     }
 
     file.close();
