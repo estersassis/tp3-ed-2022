@@ -26,8 +26,10 @@ class Registers
         void quickSortSelection(int m);
         void ordinationSelection(int left, int right, int m);
 
+        void ordinationNonRecursive();
         void quickSortNonRecursive();
 
+        void ordinationSmartStack();
         void quickSortSmartStack();
 
         void mergeSort();

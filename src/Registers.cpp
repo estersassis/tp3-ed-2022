@@ -75,17 +75,6 @@ void Registers::quickSortRecursive() {
     this->totalTime = utime + stime;
 }
 
-void Registers::testing()
-{
-    for (int i = 0; i < this->N; i++)
-    {
-        std::cout << this->regs[i].getKey() << std::endl;
-    }
-
-    std::cout << " Comp: " << this->compValue << std::endl;
-    std::cout << " Copy:" << this->copyValue << std::endl;
-}
-
 // QUICK SORT MEDIANA K
 
 int Registers::chooseRandonMedian(int k, int left, int right)
@@ -221,8 +210,13 @@ class Item {
 
 class Stack {
     public: 
-        Item *stack = new Item();
+        Item *stack;
         int size = 0;
+
+        Stack(int k) {
+            stack = new Item[k];
+            size = 0;
+        };
         
         void Empilha (Item item) {
             stack[size] = item;
@@ -235,9 +229,9 @@ class Stack {
         ~Stack() { delete stack; };
 };
 
-void Registers::quickSortSmartStack()
+void Registers::ordinationSmartStack()
 {
-    Stack stack;
+    Stack stack(N);
     Item item;
 
     int left, right, i, j;
@@ -277,9 +271,25 @@ void Registers::quickSortSmartStack()
     while (stack.size != 0);
 }
 
-void Registers::quickSortNonRecursive()
+void Registers::quickSortSmartStack()
 {
-    Stack stack;
+    struct rusage resources;
+    int rc;
+    double utime, stime;
+
+    this->ordinationSmartStack();
+
+    if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
+        perror("getrusage failed");
+    utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
+    stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+
+    this->totalTime = utime + stime;
+}
+
+void Registers::ordinationNonRecursive()
+{
+    Stack stack(N);
     Item item;
 
     int left, right, i, j;
@@ -317,6 +327,22 @@ void Registers::quickSortNonRecursive()
             left = item.left;
         }
     while (stack.size != 0);
+}
+
+void Registers::quickSortNonRecursive()
+{
+    struct rusage resources;
+    int rc;
+    double utime, stime;
+
+    this->ordinationNonRecursive();
+
+    if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
+        perror("getrusage failed");
+    utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
+    stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+
+    this->totalTime = utime + stime;
 }
 
 // HEAP SORT
