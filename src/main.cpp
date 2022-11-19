@@ -10,6 +10,8 @@
 #define QSSELECTION 3
 #define QSINTERACTIVE 4
 #define QSINTERACTIVESMART 5
+#define MS 6
+#define HS 7
 
 static int opchoose;
 int regmem;
@@ -26,8 +28,7 @@ void parse_args(int argc, char **argv)
     opchoose = -1;
     regmem = 0;
 
-    while ((c = getopt(argc, argv, "v:s:m:k:i:o:h")) != EOF)
-
+    while ((c = getopt(argc, argv, "a:b:v:s:m:k:i:o:h")) != EOF){
         switch (c)
         {
             case 'v':
@@ -43,14 +44,22 @@ void parse_args(int argc, char **argv)
                 else if (a == '5')
                     opchoose = QSINTERACTIVESMART;
                 break;
+            case 'b':
+                a = *optarg;
+                if (a == '1')
+                    opchoose = MS;
+            case 'a':
+                a = *optarg;
+                if (a == '1')
+                    opchoose = HS;
             case 'k':
-                k = *optarg;
+                k = atoi(optarg);
                 break;
             case 's':
-                s = *optarg;
+                s = atoi(optarg);
                 break;
             case 'm':
-                m = *optarg;
+                m = atoi(optarg);
                 break;
             case 'i':
                 inpfilename = optarg;
@@ -61,6 +70,7 @@ void parse_args(int argc, char **argv)
             case 'h':
                 exit(1);
         }
+    }
 }
 
 int main(int argc, char **argv)
@@ -89,32 +99,36 @@ int main(int argc, char **argv)
         switch (opchoose)
         {
             case QSRECURSIVE:
-            {
                 regs.quickSortRecursive();
                 break;
-            }
+
             case QSMEDIAN:
-            {
                 regs.quickSortMedian(k);
                 break;
-            }
+         
             case QSSELECTION:
-            {
                 regs.quickSortSelection(m);
                 break;
-            }
+           
             case QSINTERACTIVE:
-            {
                 regs.quickSortNonRecursive();
                 break;
-            }
+           
             case QSINTERACTIVESMART:
-            {
                 regs.quickSortSmartStack();
                 break;
-            }
-        }
 
+            case MS:
+                regs.mergeSort();
+                break;
+            
+            case HS:
+                regs.heapSort();
+                break;
+
+            default:
+                break;
+        }
         file << regs.getTotalTime() << std::endl;
     }
 

@@ -199,7 +199,18 @@ void Registers::ordinationSelection(int left, int right, int m) {
 }
 
 void Registers::quickSortSelection(int m) {
+    struct rusage resources;
+    int rc;
+    double utime, stime;
+
     this->ordinationSelection(0, this->N - 1, m);
+
+    if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
+        perror("getrusage failed");
+    utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
+    stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+
+    this->totalTime = utime + stime;
 }
 
 // QUICK SORT NON RECURSIVE
@@ -221,7 +232,7 @@ class Stack {
         void Desempilha () {
             size--;
         }
-
+        ~Stack() { delete stack; };
 };
 
 void Registers::quickSortSmartStack()
@@ -343,13 +354,17 @@ void Registers::build()
 
 void Registers::heapSort()
 {
+    struct rusage resources;
+    int rc;
+    double utime, stime;
+
     int left, right;
     Register x;
 
     build();
 
     left = 0;
-    right = N-1;
+    right = N - 1;
 
     while (right > 0)
     {
@@ -359,6 +374,13 @@ void Registers::heapSort()
         right--;
         remake(left, right);
     }
+
+    if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
+        perror("getrusage failed");
+    utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
+    stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+
+    this->totalTime = utime + stime;
 }
 
 void Registers::merge(int left, int mid, int right)
@@ -423,5 +445,17 @@ void Registers::ordinationMerge(int left, int right)
 
 void Registers::mergeSort()
 {
-    ordinationMerge(0, N-1);
+    struct rusage resources;
+    int rc;
+    double utime, stime;
+
+    this->ordinationMerge(0, N - 1);
+
+    if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
+        perror("getrusage failed");
+    utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
+    stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+
+    this->totalTime = utime + stime;
+
 }
