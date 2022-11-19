@@ -11,18 +11,35 @@ class Registers
         ~Registers();
 
         int getSize();
-        
-        void partition(int Left, int Right, int *i, int *j);
-        void ordination(int Left, int Right);
 
-        void selectSort(Register *v, int m);
+        
+
+
         void quickSortRecursive();
+        void partitionRecursive(int left, int right, int *i, int *j);
+        void ordinationRecursive(int left, int right);
+
+
         void quickSortMedian(int k);
+        void partitionMedian(int left, int right, int *i, int *j, int k);
+        void ordinationMedian(int left, int right, int k);
+        int chooseRandonMedian(int k, int left, int right);
+
+        void selectSort(int left, int right);
         void quickSortSelection(int m);
+        void ordinationSelection(int left, int right, int m);
+
         void quickSortNonRecursive();
+
         void quickSortSmartStack();
+
         void mergeSort();
+        void merge(int left, int mid, int right);
+        void ordinationMerge(int left, int right);
+
         void heapSort();
+        void build();
+        void remake(int left, int right);
 
         void testing();
         
