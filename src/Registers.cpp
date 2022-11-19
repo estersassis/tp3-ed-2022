@@ -1,5 +1,7 @@
 #include "Registers.hpp"
 #include <iostream>
+#include <stdio.h>
+#include <sys/resource.h>
 
 
 Registers::Registers(int seed, int N) {
@@ -18,6 +20,10 @@ Registers::Registers(int seed, int N) {
 Registers::~Registers(){}
 
 // QUICK SORT RECURSSIVO
+
+double Registers::getTotalTime(){
+    return this->totalTime;
+}
 
 void Registers::partitionRecursive(int left, int right, int *i, int *j) {
 
@@ -55,7 +61,18 @@ void Registers::ordinationRecursive(int left, int right)
 }
 
 void Registers::quickSortRecursive() {
+    struct rusage resources;
+    int rc;
+    double utime, stime;
+
     this->ordinationRecursive(0, this->N - 1);
+
+    if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
+        perror("getrusage failed");
+    utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
+    stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+
+    this->totalTime = utime + stime;
 }
 
 void Registers::testing()

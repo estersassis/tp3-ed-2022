@@ -11,14 +11,11 @@ class Registers
         ~Registers();
 
         int getSize();
-
-        
-
+        double getTotalTime();
 
         void quickSortRecursive();
         void partitionRecursive(int left, int right, int *i, int *j);
         void ordinationRecursive(int left, int right);
-
 
         void quickSortMedian(int k);
         void partitionMedian(int left, int right, int *i, int *j, int k);
