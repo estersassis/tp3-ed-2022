@@ -83,7 +83,7 @@ int Registers::chooseRandonMedian(int k, int left, int right)
 
     for (int i = 0; i < k; i++)
     {
-        aux[i] = this->regs[left + (rand() % right)].getKey();
+        aux[i] = this->regs[left + (rand() % (right-left+1))].getKey();
     }
 
     for (int i = 0; i < k - 1; i++)
