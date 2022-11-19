@@ -150,7 +150,18 @@ void Registers::ordinationMedian(int left, int right, int k)
 
 void Registers::quickSortMedian(int k)
 {
+    struct rusage resources;
+    int rc;
+    double utime, stime;
+
     this->ordinationMedian(0, this->N - 1, k);
+
+    if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
+        perror("getrusage failed");
+    utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
+    stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+
+    this->totalTime = utime + stime;
 }
 
 // QUICK SORT SELECAO

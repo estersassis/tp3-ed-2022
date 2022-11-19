@@ -43,14 +43,14 @@ void parse_args(int argc, char **argv)
                 else if (a == '5')
                     opchoose = QSINTERACTIVESMART;
                 break;
+            case 'k':
+                k = *optarg;
+                break;
             case 's':
                 s = *optarg;
                 break;
             case 'm':
                 m = *optarg;
-                break;
-            case 'k':
-                k = *optarg;
                 break;
             case 'i':
                 inpfilename = optarg;
