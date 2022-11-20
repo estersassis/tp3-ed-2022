@@ -121,7 +121,7 @@ int main(int argc, char **argv)
 
     std::ofstream file;
     file.open(outfilename);
-    file << "N  TPT  CMN  CPN" << std::endl;
+    file << "Number of Elements   Time of Processing" << std::endl;
 
     struct rusage resources;
     double u_end, u_start, s_end, s_start;
@@ -147,14 +147,14 @@ int main(int argc, char **argv)
                     s_end = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
                     u_end = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
-                    total_comp += qsr.getComparisonsQtd();
-                    total_copy += qsr.getCopiesQtd();
+                    total_comp = qsr.getComparisonsQtd();
+                    total_copy = qsr.getCopiesQtd();
                     time = (s_end - s_start) + (u_end-u_start);
                     total_time += time;
 
                     file << std::fixed;
                     file << std::setprecision(6);
-                    file << N << "  " << time << " " << qsr.getComparisonsQtd() << " " << qsr.getCopiesQtd() << std::endl;
+                    file << N << "  " << time << std::endl;
                 }
                 break;
 
@@ -181,7 +181,7 @@ int main(int argc, char **argv)
 
                     file << std::fixed;
                     file << std::setprecision(6);
-                    file << N << "  " << time << " " << qsm.getComparisonsQtd() << " " << qsm.getCopiesQtd() << std::endl;
+                    file << N << "  " << time << std::endl;
                 }
                 break;
          
@@ -208,7 +208,7 @@ int main(int argc, char **argv)
 
                     file << std::fixed;
                     file << std::setprecision(6);
-                    file << N << "  " << time << " " << qss.getComparisonsQtd() << " " << qss.getCopiesQtd() << std::endl;
+                    file << N << "  " << time << std::endl;
                 }
                 break;
            
@@ -234,7 +234,7 @@ int main(int argc, char **argv)
 
                     file << std::fixed;
                     file << std::setprecision(6);
-                    file << N << "  " << time << " " << qsi.getComparisonsQtd() << " " << qsi.getCopiesQtd() << std::endl;
+                    file << N << "  " << time << std::endl;
                 }
                 
                 break;
@@ -261,7 +261,7 @@ int main(int argc, char **argv)
 
                     file << std::fixed;
                     file << std::setprecision(6);
-                    file << N << "  " << time << " " << qsis.getComparisonsQtd() << " " << qsis.getCopiesQtd() << std::endl;
+                    file << N << "  " << time << std::endl;
                 }
                 break;
 
@@ -287,7 +287,7 @@ int main(int argc, char **argv)
 
                     file << std::fixed;
                     file << std::setprecision(6);
-                    file << N << "  " << time << " " << ms.getComparisonsQtd() << " " << ms.getCopiesQtd() << std::endl;
+                    file << N << "  " << time << std::endl;
                 }
                 break;
             
@@ -298,7 +298,7 @@ int main(int argc, char **argv)
 
                     s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
                     u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
-                    
+
                     hs.heapSort();
 
                     getrusage(RUSAGE_SELF, &resources);
@@ -312,7 +312,7 @@ int main(int argc, char **argv)
 
                     file << std::fixed;
                     file << std::setprecision(6);
-                    file << N << "  " << time << " " << hs.getComparisonsQtd() << " " << hs.getCopiesQtd() << std::endl;
+                    file << N << "  " << time << std::endl;
                 }
                 break;
 
@@ -321,7 +321,9 @@ int main(int argc, char **argv)
         }
         file << std::fixed;
         file << std::setprecision(6);
-        file << "AVR  " << N << "  " << total_time / 5 << " " << total_comp / 5 << " " << total_copy / 5 << std::endl;
+        file << "Average time: " << total_time / 5 << std::endl;
+        file << "Total copy: " << total_copy << std::endl;
+        file << "Total comparisson: " << total_comp  << std::endl;
         total_comp = 0;
         total_copy = 0;
         total_time = 0.0;

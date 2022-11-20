@@ -10,10 +10,8 @@ class Registers {
         ~Registers();
 
         // Functions for metrics access
-        double getProcessingTime();
         int getComparisonsQtd();
         int getCopiesQtd();
-        void restartMetrics();
 
         // Basic partiton function, uses middle element as pivot
         void partiton(int left, int right, int *i, int *j);
@@ -59,7 +57,5 @@ class Registers {
 
         int comparisons_qtd;
         int copies_qtd;
-        double processing_time;
-
 };
 #endif

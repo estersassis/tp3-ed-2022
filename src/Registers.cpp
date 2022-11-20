@@ -10,7 +10,6 @@ Registers::Registers(int seed, int N) {
     this->N = N;
     this->comparisons_qtd = 0;
     this->copies_qtd = 0;
-    this->processing_time = 0.0;
     this->regs = new Register[N];
 
     // Generates the random keys for each register
@@ -25,17 +24,8 @@ Registers::~Registers() { delete[] this->regs; }
 
 // METRICS ACCESS
 
-double Registers::getProcessingTime() { return this->processing_time; }
-
 int Registers::getComparisonsQtd() { return this->comparisons_qtd; }
-
 int Registers::getCopiesQtd() { return this->copies_qtd; }
-
-void Registers::restartMetrics() {
-    this->processing_time = 0.0;
-    this->comparisons_qtd = 0;
-    this->copies_qtd = 0;
-}
 
 // BASIC PARTITION FUNCTION
 
@@ -75,11 +65,9 @@ void Registers::ordinationRecursive(int left, int right) {
 
     this->partiton(left, right, &i, &j);
     if (left < j) {
-        this->comparisons_qtd++;
         this->ordinationRecursive(left, j);
     }
     if (i < right) {
-        this->comparisons_qtd++;
         this->ordinationRecursive(i, right);
     }
 }
@@ -98,14 +86,15 @@ int Registers::chooseRandonMedian(int k, int left, int right) {
     }
 
     for (int i = 0; i < k - 1; i++)
-        for (int j = 1; j < k - i; j++)
+        for (int j = 1; j < k - i; j++) {
+            this->comparisons_qtd++;
             if (aux[j] < aux[j - 1]) {
-                this->comparisons_qtd++;
                 this->copies_qtd++;
                 int ch = aux[j - 1];
                 aux[j - 1] = aux[j];
                 aux[j] = ch;
             }
+        }
 
     return aux[k / 2];
 }
@@ -145,11 +134,9 @@ void Registers::ordinationMedian(int left, int right, int k) {
 
     this->partitionMedian(left, right, &i, &j, k);
     if (left < j) {
-        this->comparisons_qtd++;
         this->ordinationMedian(left, j, k);
     }
     if (i < right) {
-        this->comparisons_qtd++;
         this->ordinationMedian(i, right, k);
     }
 }
@@ -167,9 +154,8 @@ void Registers::selectSort(int left, int right) {
     for (i = left; i < n - 1; i++) {
         Min = i;
         for (j = i + 1; j < n; j++) {
+            this->comparisons_qtd++;
             if (this->regs[j].getKey() < this->regs[Min].getKey()) {
-                this->comparisons_qtd++;
-                this->copies_qtd++;
                 Min = j;
             }
         }
@@ -185,18 +171,15 @@ void Registers::ordinationSelection(int left, int right, int m) {
     int i, j;
 
     if (right - left + 1 == m) {
-        this->comparisons_qtd++;
         this->selectSort(left, right);
     }
     else {
         this->partiton(left, right, &i, &j);
 
         if (left < j) {
-            this->comparisons_qtd++;
             this->ordinationSelection(left, j, m);
         }
         if (i < right) {
-            this->comparisons_qtd++;
             this->ordinationSelection(i, right, m);
         }
     }
@@ -221,35 +204,29 @@ void Registers::ordinationNonRecursive() {
 
     stack.Empilha(item);
 
-    do
+    do{
         if (right > left) {
-            this->comparisons_qtd++;
             this->partiton(left, right, &i, &j);
+
             if ((j - left) < (right - i)) {
-                this->comparisons_qtd++;
                 item.right = j;
                 item.left = left;
                 stack.Empilha(item);
                 left = i;
-                this->copies_qtd++;
             }
             else {
-                this->comparisons_qtd++;
                 item.left = i;
                 item.right = right;
                 stack.Empilha(item);
                 right = j;
-                this->copies_qtd++;
             }
         }
         else {
-            this->comparisons_qtd++;
             stack.Desempilha();
             right = item.right;
             left = item.left;
-            this->copies_qtd++;
         }
-    while (stack.size != 0);
+    } while (stack.size != 0);
 }
 
 void Registers::quickSortNonRecursive() {
@@ -271,35 +248,30 @@ void Registers::ordinationSmartStack() {
 
     stack.Empilha(item);
 
-    do
+    do {
         if (right > left) {
-            this->comparisons_qtd++;
+            
             this->partiton(left, right, &i, &j);
+            
             if ((j - left) > (right - i)) {
-                this->comparisons_qtd++;
                 item.right = j;
                 item.left = left;
                 stack.Empilha(item);
                 left = i;
-                this->copies_qtd++;
             }
             else {
-                this->comparisons_qtd++;
                 item.left = i;
                 item.right = right;
                 stack.Empilha(item);
                 right = j;
-                this->copies_qtd++;
             }
         }
         else {
-            this->comparisons_qtd++;
             stack.Desempilha();
             right = item.right;
             left = item.left;
-            this->copies_qtd++;
         }
-    while (stack.size != 0);
+    } while (stack.size != 0);
 }
 
 void Registers::quickSortSmartStack() {
@@ -316,13 +288,15 @@ void Registers::remake(int left, int right) {
     x = this->regs[i];
 
     while (j <= right) {
-        if (j < right)
+        if (j < right){
+            this->comparisons_qtd++;
             if (this->regs[j].getKey() < this->regs[j + 1].getKey()) {
-                this->comparisons_qtd++;
+                
                 j++;
             }
+        }
+        this->comparisons_qtd++;
         if (x.getKey() >= this->regs[j].getKey()) {
-            this->comparisons_qtd++;
             break;
         }
         this->regs[i] = this->regs[j];
@@ -373,12 +347,10 @@ void Registers::merge(int left, int mid, int right) {
 
     for (auto i = 0; i < partition_one; i++) {
         left_partition[i] = this->regs[left + i].getKey();
-        this->copies_qtd++;
     }
 
     for (auto j = 0; j < partition_two; j++) {
         right_partition[j] = this->regs[mid + 1 + j].getKey();
-        this->copies_qtd++;
     }
 
     auto partition_one_idx = 0,   
@@ -386,15 +358,14 @@ void Registers::merge(int left, int mid, int right) {
     int merged_idx = left; 
 
     while (partition_one_idx < partition_one && partition_two_idx < partition_two) {
+        this->comparisons_qtd++;
         if (left_partition[partition_one_idx].getKey() <= right_partition[partition_two_idx].getKey()) {
-            this->comparisons_qtd++;
             this->regs[merged_idx] = left_partition[partition_one_idx];
             this->copies_qtd++;
 
             partition_one_idx++;
         }
         else {
-            this->comparisons_qtd++;
             this->regs[merged_idx] = right_partition[partition_two_idx];
             this->copies_qtd++;
 
@@ -424,7 +395,6 @@ void Registers::merge(int left, int mid, int right) {
 
 void Registers::ordinationMerge(int left, int right) {
     if (left < right) {
-        this->comparisons_qtd++;
 
         int mid = left + (right - left) / 2;
 
