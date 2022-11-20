@@ -1,9 +1,11 @@
 #include "Registers.hpp"
+#include "msgassert.h"
 #include <iostream>
 #include <getopt.h>
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <memlog.h>
 
 #define QUICKSORTREC 1
 #define QUICKSORTMED 2
@@ -18,6 +20,22 @@ int regmem;
 std::string inpfilename, outfilename, sorttechnique;
 int N, m, k, s;
 
+void use()
+{
+    std::cout << "Instructions:" << std::endl;
+    std::cout << "Basic structure ----------------------------------------" << std::endl;
+    std::cout << "<name of the sorting type> -v <version of sorting> -s <seed number> -i <input filename> -o <output filename>" << std::endl;
+    std::cout << "Name of sorting types ----------------------------------------" << std::endl;
+    std::cout << "- quicksort" << std::endl;
+    std::cout << "- heapsort \t (only one version, -v 1)" << std::endl;
+    std::cout << "- mergesort \t (only one version, -v 1)" << std::endl;
+    std::cout << "Quicksort versions ----------------------------------------" << std::endl;
+    std::cout << "- recursive: -v 1" << std::endl;
+    std::cout << "- mediam: -v 2 -k <median of k elements>" << std::endl;
+    std::cout << "- selective: -v 3 -m <when change to selection sort>" << std::endl;
+    std::cout << "- interactive: -v 4" << std::endl;
+    std::cout << "- smart interactive: -v 5" << std::endl;
+}
 
 void parseArgs(int argc, char **argv) {
     extern char *optarg;
@@ -43,6 +61,8 @@ void parseArgs(int argc, char **argv) {
                         opchoose = QUICKSORTITR;
                     else if (sort_type == '5')
                         opchoose = QUICKSORTIRTSMART;
+                    else
+                        erroAssert(0, "ERROR: QUICK SORT VERSION NOT FOUND");
                 }
                 else if (sorttechnique == "heapsort") {
                     if (sort_type == '1')
@@ -52,6 +72,8 @@ void parseArgs(int argc, char **argv) {
                     if (sort_type == '1')
                         opchoose = MERGESORT;
                 }
+                else
+                    erroAssert(0, "ERROR: SORTING TYPE NOT FOUND");
                 break;
             case 'k':
                 k = atoi(optarg);
@@ -69,6 +91,7 @@ void parseArgs(int argc, char **argv) {
                 outfilename = optarg;
                 break;
             case 'h':
+                use();
                 exit(1);
         }
     }
@@ -83,6 +106,7 @@ int main(int argc, char **argv)
 
     std::ifstream inpfile;
     inpfile.open(inpfilename);
+    erroAssert(!inpfile.fail(), "ERROR: COULDN'T OPEN THE INPUT FILE");
 
     std::stringstream buffer;
     buffer << inpfile.rdbuf();
