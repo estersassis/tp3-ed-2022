@@ -10,49 +10,57 @@ class Registers
         Registers(int seed, int N);
         ~Registers();
 
-        int getSize();
-        double getTotalTime();
-        int getCompValue();
-        int getCopyValue();
+        // Functions for metrics acess
+        double getProcessingTime();
+        int getComparisonsQtd();
+        int getCopiesQtd();
         void restartMetrics();
-        std::string getMetrics();
 
+        // Basic partiton function, uses middle element as pivot
+        void partiton(int left, int right, int *i, int *j);
+
+        // Functions to process padronized recursive quicksort
         void quickSortRecursive();
-        void partitionRecursive(int left, int right, int *i, int *j);
         void ordinationRecursive(int left, int right);
 
+        // Funcions to process mediam recursive quicksort
         void quickSortMedian(int k);
-        void partitionMedian(int left, int right, int *i, int *j, int k);
         void ordinationMedian(int left, int right, int k);
+        void partitionMedian(int left, int right, int *i, int *j, int k);
         int chooseRandonMedian(int k, int left, int right);
 
-        void selectSort(int left, int right);
+        // Funcions to process selection recursive quicksort
         void quickSortSelection(int m);
         void ordinationSelection(int left, int right, int m);
-
-        void ordinationNonRecursive();
+        void selectSort(int left, int right);
+        
+        // Funcions to process non recursive/interactive quicksort
+        //obs.: follows always for the bigger side of the partition
         void quickSortNonRecursive();
+        void ordinationNonRecursive();
 
-        void ordinationSmartStack();
+        // Funcions to process non recursive/interactive smart quicksort
+        // obs.: follows always for the shortest side of the partition
         void quickSortSmartStack();
+        void ordinationSmartStack();
 
+        // Funcions to process mergesort
         void mergeSort();
-        void merge(int left, int mid, int right);
         void ordinationMerge(int left, int right);
+        void merge(int left, int mid, int right);
 
+        // Funcions to process heapsort
         void heapSort();
         void build();
         void remake(int left, int right);
-
-        void testing();
         
     private:
         Register *regs;
         int N;
 
-        int compValue;
-        int copyValue;
-        double totalTime;
+        int comparisons_qtd;
+        int copies_qtd;
+        double processing_time;
 
 };
 #endif

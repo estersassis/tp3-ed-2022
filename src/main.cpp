@@ -134,11 +134,11 @@ int main(int argc, char **argv)
                 {
                     regs.quickSortRecursive();
 
-                    total_comp += regs.getCompValue();
-                    total_copy += regs.getCopyValue();
-                    total_time += regs.getTotalTime();
+                    total_comp += regs.getComparisonsQtd();
+                    total_copy += regs.getCopiesQtd();
+                    total_time += regs.getProcessingTime();
 
-                    file << N << "  " << regs.getTotalTime() << " " << regs.getCompValue() << " " << regs.getCopyValue() << std::endl;
+                    file << N << "  " << regs.getProcessingTime() << " " << regs.getComparisonsQtd() << " " << regs.getCopiesQtd() << std::endl;
                     
                     regs.restartMetrics();
                 }
@@ -149,11 +149,11 @@ int main(int argc, char **argv)
                 {
                     regs.quickSortMedian(k);
 
-                    total_comp += regs.getCompValue();
-                    total_copy += regs.getCopyValue();
-                    total_time += regs.getTotalTime();
+                    total_comp += regs.getComparisonsQtd();
+                    total_copy += regs.getCopiesQtd();
+                    total_time += regs.getProcessingTime();
 
-                    file << N << "  " << regs.getTotalTime() << " " << regs.getCompValue() << " " << regs.getCopyValue() << std::endl;
+                    file << N << "  " << regs.getProcessingTime() << " " << regs.getComparisonsQtd() << " " << regs.getCopiesQtd() << std::endl;
 
                     regs.restartMetrics();
                 }
@@ -164,11 +164,11 @@ int main(int argc, char **argv)
                 {
                     regs.quickSortSelection(m);
 
-                    total_comp += regs.getCompValue();
-                    total_copy += regs.getCopyValue();
-                    total_time += regs.getTotalTime();
+                    total_comp += regs.getComparisonsQtd();
+                    total_copy += regs.getCopiesQtd();
+                    total_time += regs.getProcessingTime();
 
-                    file << N << "  " << regs.getTotalTime() << " " << regs.getCompValue() << " " << regs.getCopyValue() << std::endl;
+                    file << N << "  " << regs.getProcessingTime() << " " << regs.getComparisonsQtd() << " " << regs.getCopiesQtd() << std::endl;
 
                     regs.restartMetrics();
                 }
@@ -179,11 +179,11 @@ int main(int argc, char **argv)
                 {
                     regs.quickSortNonRecursive();
 
-                    total_comp += regs.getCompValue();
-                    total_copy += regs.getCopyValue();
-                    total_time += regs.getTotalTime();
+                    total_comp += regs.getComparisonsQtd();
+                    total_copy += regs.getCopiesQtd();
+                    total_time += regs.getProcessingTime();
 
-                    file << N << "  " << regs.getTotalTime() << " " << regs.getCompValue() << " " << regs.getCopyValue() << std::endl;
+                    file << N << "  " << regs.getProcessingTime() << " " << regs.getComparisonsQtd() << " " << regs.getCopiesQtd() << std::endl;
 
                     regs.restartMetrics();
                 }
@@ -195,11 +195,11 @@ int main(int argc, char **argv)
                 {
                     regs.quickSortSmartStack();
 
-                    total_comp += regs.getCompValue();
-                    total_copy += regs.getCopyValue();
-                    total_time += regs.getTotalTime();
+                    total_comp += regs.getComparisonsQtd();
+                    total_copy += regs.getCopiesQtd();
+                    total_time += regs.getProcessingTime();
 
-                    file << N << "  " << regs.getTotalTime() << " " << regs.getCompValue() << " " << regs.getCopyValue() << std::endl;
+                    file << N << "  " << regs.getProcessingTime() << " " << regs.getComparisonsQtd() << " " << regs.getCopiesQtd() << std::endl;
 
                     regs.restartMetrics();
                 }
@@ -210,11 +210,11 @@ int main(int argc, char **argv)
                 {
                     regs.mergeSort();
 
-                    total_comp += regs.getCompValue();
-                    total_copy += regs.getCopyValue();
-                    total_time += regs.getTotalTime();
+                    total_comp += regs.getComparisonsQtd();
+                    total_copy += regs.getCopiesQtd();
+                    total_time += regs.getProcessingTime();
 
-                    file << N << "  " << regs.getTotalTime() << " " << regs.getCompValue() << " " << regs.getCopyValue() << std::endl;
+                    file << N << "  " << regs.getProcessingTime() << " " << regs.getComparisonsQtd() << " " << regs.getCopiesQtd() << std::endl;
 
                     regs.restartMetrics();
                 }
@@ -225,11 +225,11 @@ int main(int argc, char **argv)
                 {
                     regs.heapSort();
 
-                    total_comp += regs.getCompValue();
-                    total_copy += regs.getCopyValue();
-                    total_time += regs.getTotalTime();
+                    total_comp += regs.getComparisonsQtd();
+                    total_copy += regs.getCopiesQtd();
+                    total_time += regs.getProcessingTime();
 
-                    file << N << "  " << regs.getTotalTime() << " " << regs.getCompValue() << " " << regs.getCopyValue() << std::endl;
+                    file << N << "  " << regs.getProcessingTime() << " " << regs.getComparisonsQtd() << " " << regs.getCopiesQtd() << std::endl;
 
                     regs.restartMetrics();
                 }

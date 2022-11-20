@@ -7,8 +7,8 @@
 
 Registers::Registers(int seed, int N) {
     this->N = N;
-    this->compValue = 0;
-    this->copyValue = 0;
+    this->comparisons_qtd = 0;
+    this->copies_qtd = 0;
     this->regs = new Register[N];
 
     srand(seed);
@@ -22,22 +22,16 @@ Registers::~Registers(){}
 
 // QUICK SORT RECURSSIVO
 
-std::string Registers::getMetrics(){
-    
-    std::string s = std::to_string(this->totalTime) + " " + std::to_string(this->copyValue) + " " + std::to_string(this->compValue);
-    return s;
-}
-
-double Registers::getTotalTime() { return this->totalTime;}
-int Registers::getCompValue(){ return this->compValue; }
-int Registers::getCopyValue() { return this->copyValue; }
+double Registers::getProcessingTime() { return this->processing_time;}
+int Registers::getComparisonsQtd(){ return this->comparisons_qtd; }
+int Registers::getCopiesQtd() { return this->copies_qtd; }
 void Registers::restartMetrics() {
-    this->totalTime = 0.0;
-    this->compValue = 0;
-    this->copyValue = 0;
+    this->processing_time = 0.0;
+    this->comparisons_qtd = 0;
+    this->copies_qtd = 0;
 }
 
-void Registers::partitionRecursive(int left, int right, int *i, int *j) {
+void Registers::partiton(int left, int right, int *i, int *j) {
 
     Register x, w;
     *i = left; *j = right;
@@ -48,18 +42,18 @@ void Registers::partitionRecursive(int left, int right, int *i, int *j) {
     {
         while (x.getKey() > this->regs[*i].getKey()){
             (*i)++;
-            this->compValue++;
+            this->comparisons_qtd++;
         }
         while (x.getKey() < this->regs[*j].getKey()){
             (*j)--;
-            this->compValue++;
+            this->comparisons_qtd++;
         }
 
         if (*i <= *j) {
             w = this->regs[*i];
             this->regs[*i] = this->regs[*j];
             this->regs[*j] = w;
-            this->copyValue++;
+            this->copies_qtd++;
             (*i)++;
             (*j)--;
         }
@@ -70,13 +64,13 @@ void Registers::ordinationRecursive(int left, int right)
 {
     int i, j;
 
-    this->partitionRecursive(left, right, &i, &j);
+    this->partiton(left, right, &i, &j);
     if (left < j) {
-        this->compValue++;
+        this->comparisons_qtd++;
         this->ordinationRecursive(left, j);
     }
     if (i < right) {
-        this->compValue++;
+        this->comparisons_qtd++;
         this->ordinationRecursive(i, right);
     }
 }
@@ -93,7 +87,7 @@ void Registers::quickSortRecursive() {
     utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
     stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
-    this->totalTime = utime + stime;
+    this->processing_time = utime + stime;
 }
 
 // QUICK SORT MEDIANA K
@@ -111,8 +105,8 @@ int Registers::chooseRandonMedian(int k, int left, int right)
         for (int j = 1; j < k - i; j++)
             if (aux[j] < aux[j - 1])
             {
-                this->compValue++;
-                this->copyValue++;
+                this->comparisons_qtd++;
+                this->copies_qtd++;
                 int ch = aux[j - 1];
                 aux[j - 1] = aux[j];
                 aux[j] = ch;
@@ -135,12 +129,12 @@ void Registers::partitionMedian(int left, int right, int *i, int *j, int k)
     {
         while (x > this->regs[*i].getKey()){
             (*i)++;
-            this->compValue++;
+            this->comparisons_qtd++;
         }
             
         while (x < this->regs[*j].getKey()){
             (*j)--;
-            this->compValue++;
+            this->comparisons_qtd++;
         }
 
         if (*i <= *j)
@@ -148,7 +142,7 @@ void Registers::partitionMedian(int left, int right, int *i, int *j, int k)
             w = this->regs[*i];
             this->regs[*i] = this->regs[*j];
             this->regs[*j] = w;
-            this->copyValue++;
+            this->copies_qtd++;
             (*i)++;
             (*j)--;
         }
@@ -161,11 +155,11 @@ void Registers::ordinationMedian(int left, int right, int k)
 
     this->partitionMedian(left, right, &i, &j, k);
     if (left < j) {
-        this->compValue++;
+        this->comparisons_qtd++;
         this->ordinationMedian(left, j, k);
     }
     if (i < right) {
-        this->compValue++;
+        this->comparisons_qtd++;
         this->ordinationMedian(i, right, k);
     }
 }
@@ -183,7 +177,7 @@ void Registers::quickSortMedian(int k)
     utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
     stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
-    this->totalTime = utime + stime;
+    this->processing_time = utime + stime;
 }
 
 // QUICK SORT SELECAO
@@ -196,8 +190,8 @@ void Registers::selectSort(int left, int right) {
         Min = i;
         for (j = i + 1; j < n; j++) {
             if (this->regs[j].getKey() < this->regs[Min].getKey()) {
-                this->compValue++;
-                this->copyValue++;
+                this->comparisons_qtd++;
+                this->copies_qtd++;
                 Min = j;
             }
         }
@@ -205,7 +199,7 @@ void Registers::selectSort(int left, int right) {
         Register aux = this->regs[i];
         this->regs[i] = this->regs[Min];
         this->regs[Min] = aux;
-        this->copyValue++;
+        this->copies_qtd++;
     }
 }
 
@@ -213,17 +207,17 @@ void Registers::ordinationSelection(int left, int right, int m) {
     int i, j;
 
     if (right - left + 1 == m) {
-        this->compValue++;
+        this->comparisons_qtd++;
         this->selectSort(left, right);
     }
     else {
-        this->partitionRecursive(left, right, &i, &j);
+        this->partiton(left, right, &i, &j);
         if (left < j) {
-            this->compValue++;
+            this->comparisons_qtd++;
             this->ordinationSelection(left, j, m);
         }
         if (i < right) {
-            this->compValue++;
+            this->comparisons_qtd++;
             this->ordinationSelection(i, right, m);
         }
     }
@@ -241,7 +235,7 @@ void Registers::quickSortSelection(int m) {
     utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
     stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
-    this->totalTime = utime + stime;
+    this->processing_time = utime + stime;
 }
 
 // QUICK SORT NON RECURSIVE
@@ -288,34 +282,34 @@ void Registers::ordinationSmartStack()
     do
         if (right > left)
         {
-            this->compValue++;
-            this->partitionRecursive(left, right, &i, &j);
+            this->comparisons_qtd++;
+            this->partiton(left, right, &i, &j);
             if ((j - left) > (right - i))
             {
-                this->compValue++;
+                this->comparisons_qtd++;
                 item.right = j;
                 item.left = left;
                 stack.Empilha(item);
                 left = i;
-                this->copyValue++;
+                this->copies_qtd++;
             }
             else
             {
-                this->compValue++;
+                this->comparisons_qtd++;
                 item.left = i;
                 item.right = right;
                 stack.Empilha(item);
                 right = j;
-                this->copyValue++;
+                this->copies_qtd++;
             }
         }
         else
         {
-            this->compValue++;
+            this->comparisons_qtd++;
             stack.Desempilha();
             right = item.right;
             left = item.left;
-            this->copyValue++;
+            this->copies_qtd++;
         }
     while (stack.size != 0);
 }
@@ -333,7 +327,7 @@ void Registers::quickSortSmartStack()
     utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
     stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
-    this->totalTime = utime + stime;
+    this->processing_time = utime + stime;
 }
 
 void Registers::ordinationNonRecursive()
@@ -353,34 +347,34 @@ void Registers::ordinationNonRecursive()
     do
         if (right > left)
         {
-            this->compValue++;
-            this->partitionRecursive(left, right, &i, &j);
+            this->comparisons_qtd++;
+            this->partiton(left, right, &i, &j);
             if ((j - left) < (right - i))
             {
-                this->compValue++;
+                this->comparisons_qtd++;
                 item.right = j;
                 item.left = left;
                 stack.Empilha(item);
                 left = i;
-                this->copyValue++;
+                this->copies_qtd++;
             }
             else
             {
-                this->compValue++;
+                this->comparisons_qtd++;
                 item.left = i;
                 item.right = right;
                 stack.Empilha(item);
                 right = j;
-                this->copyValue++;
+                this->copies_qtd++;
             }
         }
         else
         {
-            this->compValue++;
+            this->comparisons_qtd++;
             stack.Desempilha();
             right = item.right;
             left = item.left;
-            this->copyValue++;
+            this->copies_qtd++;
         }
     while (stack.size != 0);
 }
@@ -398,7 +392,7 @@ void Registers::quickSortNonRecursive()
     utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
     stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
-    this->totalTime = utime + stime;
+    this->processing_time = utime + stime;
 }
 
 // HEAP SORT
@@ -413,17 +407,17 @@ void Registers::remake(int left, int right)
     {
         if (j < right)
             if (this->regs[j].getKey() < this->regs[j + 1].getKey()) {
-                this->compValue++;
+                this->comparisons_qtd++;
                 j++;
             }
         if (x.getKey() >= this->regs[j].getKey()) {
-            this->compValue++;
+            this->comparisons_qtd++;
             break;
         }
         this->regs[i] = this->regs[j];
         i = j;
         j = i * 2;
-        this->copyValue++;
+        this->copies_qtd++;
     }
     this->regs[i] = x;
 }
@@ -460,7 +454,7 @@ void Registers::heapSort()
         this->regs[right] = x;
         right--;
         remake(left, right);
-        this->copyValue++;
+        this->copies_qtd++;
     }
 
     if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
@@ -468,7 +462,7 @@ void Registers::heapSort()
     utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
     stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
-    this->totalTime = utime + stime;
+    this->processing_time = utime + stime;
 }
 
 void Registers::merge(int left, int mid, int right)
@@ -481,11 +475,11 @@ void Registers::merge(int left, int mid, int right)
 
     for (auto i = 0; i < subArrayOne; i++) {
         leftArray[i] = this->regs[left + i].getKey();
-        this->copyValue++;
+        this->copies_qtd++;
     }
     for (auto j = 0; j < subArrayTwo; j++) {
         rightArray[j] = this->regs[mid + 1 + j].getKey();
-        this->copyValue++;
+        this->copies_qtd++;
     }
 
     auto indexOfSubArrayOne = 0,   
@@ -496,16 +490,16 @@ void Registers::merge(int left, int mid, int right)
     {
         if (leftArray[indexOfSubArrayOne].getKey() <= rightArray[indexOfSubArrayTwo].getKey())
         {
-            this->compValue++;
+            this->comparisons_qtd++;
             this->regs[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-            this->copyValue++;
+            this->copies_qtd++;
             indexOfSubArrayOne++;
         }
         else
         {
-            this->compValue++;
+            this->comparisons_qtd++;
             this->regs[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-            this->copyValue++;
+            this->copies_qtd++;
             indexOfSubArrayTwo++;
         }
         indexOfMergedArray++;
@@ -514,7 +508,7 @@ void Registers::merge(int left, int mid, int right)
     while (indexOfSubArrayOne < subArrayOne)
     {
         this->regs[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-        this->copyValue++;
+        this->copies_qtd++;
         indexOfSubArrayOne++;
         indexOfMergedArray++;
     }
@@ -522,7 +516,7 @@ void Registers::merge(int left, int mid, int right)
     while (indexOfSubArrayTwo < subArrayTwo)
     {
         this->regs[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-        this->copyValue++;
+        this->copies_qtd++;
         indexOfSubArrayTwo++;
         indexOfMergedArray++;
     }
@@ -534,7 +528,7 @@ void Registers::ordinationMerge(int left, int right)
 {
     if (left < right)
     {
-        this->compValue++;
+        this->comparisons_qtd++;
         int mid = left + (right - left) / 2;
         ordinationMerge(left, mid);
         ordinationMerge(mid + 1, right);
@@ -555,6 +549,6 @@ void Registers::mergeSort()
     utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
     stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
-    this->totalTime = utime + stime;
+    this->processing_time = utime + stime;
 
 }
