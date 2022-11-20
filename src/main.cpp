@@ -5,53 +5,54 @@
 #include <fstream>
 #include <sstream>
 
-#define QSRECURSIVE 1
-#define QSMEDIAN 2
-#define QSSELECTION 3
-#define QSINTERACTIVE 4
-#define QSINTERACTIVESMART 5
-#define MS 6
-#define HS 7
+#define QUICKSORTREC 1
+#define QUICKSORTMED 2
+#define QUICKSORTSELECT 3
+#define QUICKSORTITR 4
+#define QUICKSORTIRTSMART 5
+#define MERGESORT 6
+#define HEAPSORT 7
 
 static int opchoose;
 int regmem;
-std::string inpfilename, outfilename;
+std::string inpfilename, outfilename, sorttechnique;
 int N, m, k, s;
 
-void parse_args(int argc, char **argv)
-{
-    extern char *optarg;
-    char a;
 
+void parseArgs(int argc, char **argv) {
+    extern char *optarg;
+    char sort_type;
     int c;
 
     opchoose = -1;
     regmem = 0;
 
-    while ((c = getopt(argc, argv, "a:b:v:s:m:k:i:o:h")) != EOF){
+    while ((c = getopt(argc, argv, "v:s:m:k:i:o:h")) != EOF){
         switch (c)
         {
             case 'v':
-                a = *optarg;
-                if (a == '1')
-                    opchoose = QSRECURSIVE;
-                else if(a == '2')
-                    opchoose = QSMEDIAN;
-                else if (a == '3')
-                    opchoose = QSSELECTION;
-                else if (a == '4')
-                    opchoose = QSINTERACTIVE;
-                else if (a == '5')
-                    opchoose = QSINTERACTIVESMART;
+                sort_type = *optarg;
+                if (sorttechnique == "quicksort") {
+                    if (sort_type == '1')
+                        opchoose = QUICKSORTREC;
+                    else if(sort_type == '2')
+                        opchoose = QUICKSORTMED;
+                    else if (sort_type == '3')
+                        opchoose = QUICKSORTSELECT;
+                    else if (sort_type == '4')
+                        opchoose = QUICKSORTITR;
+                    else if (sort_type == '5')
+                        opchoose = QUICKSORTIRTSMART;
+                }
+                else if (sorttechnique == "heapsort") {
+                    if (sort_type == '1')
+                        opchoose = HEAPSORT;
+                }
+                else if (sorttechnique == "mergesort") {
+                    if (sort_type == '1')
+                        opchoose = MERGESORT;
+                }
                 break;
-            case 'b':
-                a = *optarg;
-                if (a == '1')
-                    opchoose = MS;
-            case 'a':
-                a = *optarg;
-                if (a == '1')
-                    opchoose = HS;
             case 'k':
                 k = atoi(optarg);
                 break;
@@ -75,61 +76,145 @@ void parse_args(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
-   
-    parse_args(argc, argv);
+
+    sorttechnique = argv[1];
+
+    parseArgs(argc, argv);
 
     std::ifstream inpfile;
     inpfile.open(inpfilename);
+
     std::stringstream buffer;
     buffer << inpfile.rdbuf();
+
     inpfile.close();
 
-    int count;
+    int running_count, total_comp, total_copy;
+    double total_time;
 
-    buffer >> count;
+    buffer >> running_count;
 
     std::ofstream file;
     file.open(outfilename);
+    file << "N  TPT  CMN  CPN" << std::endl;
 
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i < running_count; i++)
     {
         buffer >> N;
         Registers regs(s, N);
 
         switch (opchoose)
         {
-            case QSRECURSIVE:
-                regs.quickSortRecursive();
+            case QUICKSORTREC:
+                for (int i = 0; i < 5; i++)
+                {
+                    regs.quickSortRecursive();
+
+                    total_comp += regs.getCompValue();
+                    total_copy += regs.getCopyValue();
+                    total_time += regs.getTotalTime();
+
+                    file << N << "  " << regs.getTotalTime() << " " << regs.getCompValue() << " " << regs.getCopyValue() << std::endl;
+                    
+                    regs.restartMetrics();
+                }
                 break;
 
-            case QSMEDIAN:
-                regs.quickSortMedian(k);
+            case QUICKSORTMED:
+                for (int i = 0; i < 5; i++)
+                {
+                    regs.quickSortMedian(k);
+
+                    total_comp += regs.getCompValue();
+                    total_copy += regs.getCopyValue();
+                    total_time += regs.getTotalTime();
+
+                    file << N << "  " << regs.getTotalTime() << " " << regs.getCompValue() << " " << regs.getCopyValue() << std::endl;
+
+                    regs.restartMetrics();
+                }
                 break;
          
-            case QSSELECTION:
-                regs.quickSortSelection(m);
+            case QUICKSORTSELECT:
+                for (int i = 0; i < 5; i++)
+                {
+                    regs.quickSortSelection(m);
+
+                    total_comp += regs.getCompValue();
+                    total_copy += regs.getCopyValue();
+                    total_time += regs.getTotalTime();
+
+                    file << N << "  " << regs.getTotalTime() << " " << regs.getCompValue() << " " << regs.getCopyValue() << std::endl;
+
+                    regs.restartMetrics();
+                }
                 break;
            
-            case QSINTERACTIVE:
-                regs.quickSortNonRecursive();
+            case QUICKSORTITR:
+                for (int i = 0; i < 5; i++)
+                {
+                    regs.quickSortNonRecursive();
+
+                    total_comp += regs.getCompValue();
+                    total_copy += regs.getCopyValue();
+                    total_time += regs.getTotalTime();
+
+                    file << N << "  " << regs.getTotalTime() << " " << regs.getCompValue() << " " << regs.getCopyValue() << std::endl;
+
+                    regs.restartMetrics();
+                }
+                
                 break;
-           
-            case QSINTERACTIVESMART:
-                regs.quickSortSmartStack();
+        
+            case QUICKSORTIRTSMART:
+                for (int i = 0; i < 5; i++)
+                {
+                    regs.quickSortSmartStack();
+
+                    total_comp += regs.getCompValue();
+                    total_copy += regs.getCopyValue();
+                    total_time += regs.getTotalTime();
+
+                    file << N << "  " << regs.getTotalTime() << " " << regs.getCompValue() << " " << regs.getCopyValue() << std::endl;
+
+                    regs.restartMetrics();
+                }
                 break;
 
-            case MS:
-                regs.mergeSort();
+            case MERGESORT:
+                for (int i = 0; i < 5; i++)
+                {
+                    regs.mergeSort();
+
+                    total_comp += regs.getCompValue();
+                    total_copy += regs.getCopyValue();
+                    total_time += regs.getTotalTime();
+
+                    file << N << "  " << regs.getTotalTime() << " " << regs.getCompValue() << " " << regs.getCopyValue() << std::endl;
+
+                    regs.restartMetrics();
+                }
                 break;
             
-            case HS:
-                regs.heapSort();
+            case HEAPSORT:
+                for (int i = 0; i < 5; i++)
+                {
+                    regs.heapSort();
+
+                    total_comp += regs.getCompValue();
+                    total_copy += regs.getCopyValue();
+                    total_time += regs.getTotalTime();
+
+                    file << N << "  " << regs.getTotalTime() << " " << regs.getCompValue() << " " << regs.getCopyValue() << std::endl;
+
+                    regs.restartMetrics();
+                }
                 break;
 
             default:
                 break;
         }
-        file << regs.getMetrics() << std::endl;
+        file << "AVR  " << N << "  " << total_time / 5 << " " << total_comp / 5 << " " << total_copy / 5 << std::endl;
     }
 
     file.close();

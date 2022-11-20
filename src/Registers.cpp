@@ -28,6 +28,15 @@ std::string Registers::getMetrics(){
     return s;
 }
 
+double Registers::getTotalTime() { return this->totalTime;}
+int Registers::getCompValue(){ return this->compValue; }
+int Registers::getCopyValue() { return this->copyValue; }
+void Registers::restartMetrics() {
+    this->totalTime = 0.0;
+    this->compValue = 0;
+    this->copyValue = 0;
+}
+
 void Registers::partitionRecursive(int left, int right, int *i, int *j) {
 
     Register x, w;

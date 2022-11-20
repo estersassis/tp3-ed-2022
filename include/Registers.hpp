@@ -11,6 +11,10 @@ class Registers
         ~Registers();
 
         int getSize();
+        double getTotalTime();
+        int getCompValue();
+        int getCopyValue();
+        void restartMetrics();
         std::string getMetrics();
 
         void quickSortRecursive();
