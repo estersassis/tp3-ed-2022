@@ -1,0 +1,25 @@
+Number of Elements   Time of Processing
+1000  0.110558
+1000  1.079680
+1000  1.063736
+1000  0.071558
+1000  1.071664
+Average time: 0.679439
+Total copy: 49880
+Total comparisson: 43435
+5000  4.775864
+5000  3.735324
+5000  4.871920
+5000  3.784806
+5000  4.823142
+Average time: 4.398211
+Total copy: 309040
+Total comparisson: 276085
+10000  9.855640
+10000  10.807678
+10000  9.896220
+10000  9.999522
+10000  8.975480
+Average time: 9.906908
+Total copy: 668080
+Total comparisson: 602260
