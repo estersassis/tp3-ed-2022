@@ -85,19 +85,7 @@ void Registers::ordinationRecursive(int left, int right) {
 }
 
 void Registers::quickSortRecursive() {
-    struct rusage resources;
-    int rc;
-    double utime, stime;
-
     this->ordinationRecursive(0, this->N - 1);
-
-    if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
-        perror("getrusage failed");
-
-    utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
-    stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
-
-    this->processing_time = utime + stime;
 }
 
 // MEDIAM RECURSIVE QUICK SORT
@@ -167,19 +155,7 @@ void Registers::ordinationMedian(int left, int right, int k) {
 }
 
 void Registers::quickSortMedian(int k) {
-    struct rusage resources;
-    int rc;
-    double utime, stime;
-
     this->ordinationMedian(0, this->N - 1, k);
-
-    if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
-        perror("getrusage failed");
-
-    utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
-    stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
-
-    this->processing_time = utime + stime;
 }
 
 // SELECTION RECURSIVE QUICK SORT
@@ -227,19 +203,7 @@ void Registers::ordinationSelection(int left, int right, int m) {
 }
 
 void Registers::quickSortSelection(int m) {
-    struct rusage resources;
-    int rc;
-    double utime, stime;
-
     this->ordinationSelection(0, this->N - 1, m);
-
-    if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
-        perror("getrusage failed");
-
-    utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
-    stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
-
-    this->processing_time = utime + stime;
 }
 
 // NON RECURSIVE/INTERACTIVE QUICK SORT - Using biggest side
@@ -288,21 +252,8 @@ void Registers::ordinationNonRecursive() {
     while (stack.size != 0);
 }
 
-void Registers::quickSortNonRecursive()
-{
-    struct rusage resources;
-    int rc;
-    double utime, stime;
-
+void Registers::quickSortNonRecursive() {
     this->ordinationNonRecursive();
-
-    if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
-        perror("getrusage failed");
-
-    utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
-    stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
-
-    this->processing_time = utime + stime;
 }
 
 // NON RECURSIVE/INTERACTIVE SMART QUICK SORT - Using shortest side
@@ -352,19 +303,7 @@ void Registers::ordinationSmartStack() {
 }
 
 void Registers::quickSortSmartStack() {
-    struct rusage resources;
-    int rc;
-    double utime, stime;
-
     this->ordinationSmartStack();
-
-    if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
-        perror("getrusage failed");
-
-    utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
-    stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
-
-    this->processing_time = utime + stime;
 }
 
 // HEAP SORT
@@ -404,10 +343,6 @@ void Registers::build() {
 }
 
 void Registers::heapSort() {
-    struct rusage resources;
-    int rc;
-    double utime, stime;
-
     int left, right;
     Register x;
 
@@ -424,14 +359,6 @@ void Registers::heapSort() {
         remake(left, right);
         this->copies_qtd++;
     }
-
-    if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
-        perror("getrusage failed");
-
-    utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
-    stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
-
-    this->processing_time = utime + stime;
 }
 
 // MERGE SORT
@@ -509,17 +436,5 @@ void Registers::ordinationMerge(int left, int right) {
 }
 
 void Registers::mergeSort() {
-    struct rusage resources;
-    int rc;
-    double utime, stime;
-
     this->ordinationMerge(0, N - 1);
-
-    if ((rc = getrusage(RUSAGE_SELF, &resources)) != 0)
-        perror("getrusage failed");
-
-    utime = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_utime.tv_usec;
-    stime = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
-
-    this->processing_time = utime + stime;
 }

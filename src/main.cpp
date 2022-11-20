@@ -6,6 +6,8 @@
 #include <fstream>
 #include <sstream>
 #include <memlog.h>
+#include <sys/resource.h>
+#include <iomanip>
 
 #define QUICKSORTREC 1
 #define QUICKSORTMED 2
@@ -99,7 +101,6 @@ void parseArgs(int argc, char **argv) {
 
 int main(int argc, char **argv)
 {
-
     sorttechnique = argv[1];
 
     parseArgs(argc, argv);
@@ -114,13 +115,16 @@ int main(int argc, char **argv)
     inpfile.close();
 
     int running_count, total_comp, total_copy;
-    double total_time;
+    double total_time, time;
 
     buffer >> running_count;
 
     std::ofstream file;
     file.open(outfilename);
     file << "N  TPT  CMN  CPN" << std::endl;
+
+    struct rusage resources;
+    double u_end, u_start, s_end, s_start;
 
     for (int i = 0; i < running_count; i++)
     {
@@ -132,15 +136,25 @@ int main(int argc, char **argv)
                 for (int i = 0; i < 5; i++)
                 {
                     Registers qsr(s, N);
+
+                    getrusage(RUSAGE_SELF, &resources);
+                    s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+
                     qsr.quickSortRecursive();
+
+                    getrusage(RUSAGE_SELF, &resources);
+                    s_end = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    u_end = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
                     total_comp += qsr.getComparisonsQtd();
                     total_copy += qsr.getCopiesQtd();
-                    total_time += qsr.getProcessingTime();
+                    time = (s_end - s_start) + (u_end-u_start);
+                    total_time += time;
 
-                    file << N << "  " << qsr.getProcessingTime() << " " << qsr.getComparisonsQtd() << " " << qsr.getCopiesQtd() << std::endl;
-
-                    qsr.restartMetrics();
+                    file << std::fixed;
+                    file << std::setprecision(6);
+                    file << N << "  " << time << " " << qsr.getComparisonsQtd() << " " << qsr.getCopiesQtd() << std::endl;
                 }
                 break;
 
@@ -148,15 +162,26 @@ int main(int argc, char **argv)
                 for (int i = 0; i < 5; i++)
                 {
                     Registers qsm(s, N);
+
+                    getrusage(RUSAGE_SELF, &resources);
+                    s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+
                     qsm.quickSortMedian(k);
+
+                    getrusage(RUSAGE_SELF, &resources);
+                    s_end = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    u_end = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    
 
                     total_comp += qsm.getComparisonsQtd();
                     total_copy += qsm.getCopiesQtd();
-                    total_time += qsm.getProcessingTime();
+                    time = (s_end - s_start) + (u_end - u_start);
+                    total_time += time;
 
-                    file << N << "  " << qsm.getProcessingTime() << " " << qsm.getComparisonsQtd() << " " << qsm.getCopiesQtd() << std::endl;
-
-                    qsm.restartMetrics();
+                    file << std::fixed;
+                    file << std::setprecision(6);
+                    file << N << "  " << time << " " << qsm.getComparisonsQtd() << " " << qsm.getCopiesQtd() << std::endl;
                 }
                 break;
          
@@ -164,15 +189,26 @@ int main(int argc, char **argv)
                 for (int i = 0; i < 5; i++)
                 {
                     Registers qss(s, N);
+
+                    getrusage(RUSAGE_SELF, &resources);
+                    s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+
                     qss.quickSortSelection(m);
+
+                    getrusage(RUSAGE_SELF, &resources);
+                    s_end = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    u_end = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    
 
                     total_comp += qss.getComparisonsQtd();
                     total_copy += qss.getCopiesQtd();
-                    total_time += qss.getProcessingTime();
+                    time = (s_end - s_start) + (u_end - u_start);
+                    total_time += time;
 
-                    file << N << "  " << qss.getProcessingTime() << " " << qss.getComparisonsQtd() << " " << qss.getCopiesQtd() << std::endl;
-
-                    qss.restartMetrics();
+                    file << std::fixed;
+                    file << std::setprecision(6);
+                    file << N << "  " << time << " " << qss.getComparisonsQtd() << " " << qss.getCopiesQtd() << std::endl;
                 }
                 break;
            
@@ -180,15 +216,25 @@ int main(int argc, char **argv)
                 for (int i = 0; i < 5; i++)
                 {
                     Registers qsi(s, N);
+                    
+                    getrusage(RUSAGE_SELF, &resources);
+                    s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+
                     qsi.quickSortNonRecursive();
+
+                    getrusage(RUSAGE_SELF, &resources);
+                    s_end = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    u_end = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
                     total_comp += qsi.getComparisonsQtd();
                     total_copy += qsi.getCopiesQtd();
-                    total_time += qsi.getProcessingTime();
+                    time = (s_end - s_start) + (u_end - u_start);
+                    total_time += time;
 
-                    file << N << "  " << qsi.getProcessingTime() << " " << qsi.getComparisonsQtd() << " " << qsi.getCopiesQtd() << std::endl;
-
-                    qsi.restartMetrics();
+                    file << std::fixed;
+                    file << std::setprecision(6);
+                    file << N << "  " << time << " " << qsi.getComparisonsQtd() << " " << qsi.getCopiesQtd() << std::endl;
                 }
                 
                 break;
@@ -197,15 +243,25 @@ int main(int argc, char **argv)
                 for (int i = 0; i < 5; i++)
                 {
                     Registers qsis(s, N);
+
+                    getrusage(RUSAGE_SELF, &resources);
+                    s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+
                     qsis.quickSortSmartStack();
+
+                    getrusage(RUSAGE_SELF, &resources);
+                    s_end = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    u_end = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
                     total_comp += qsis.getComparisonsQtd();
                     total_copy += qsis.getCopiesQtd();
-                    total_time += qsis.getProcessingTime();
+                    time = (s_end - s_start) + (u_end - u_start);
+                    total_time += time;
 
-                    file << N << "  " << qsis.getProcessingTime() << " " << qsis.getComparisonsQtd() << " " << qsis.getCopiesQtd() << std::endl;
-
-                    qsis.restartMetrics();
+                    file << std::fixed;
+                    file << std::setprecision(6);
+                    file << N << "  " << time << " " << qsis.getComparisonsQtd() << " " << qsis.getCopiesQtd() << std::endl;
                 }
                 break;
 
@@ -213,15 +269,25 @@ int main(int argc, char **argv)
                 for (int i = 0; i < 5; i++)
                 {
                     Registers ms(s, N);
+
+                    getrusage(RUSAGE_SELF, &resources);
+                    s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+
                     ms.mergeSort();
+
+                    getrusage(RUSAGE_SELF, &resources);
+                    s_end = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    u_end = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
                     total_comp += ms.getComparisonsQtd();
                     total_copy += ms.getCopiesQtd();
-                    total_time += ms.getProcessingTime();
+                    time = (s_end - s_start) + (u_end - u_start);
+                    total_time += time;
 
-                    file << N << "  " << ms.getProcessingTime() << " " << ms.getComparisonsQtd() << " " << ms.getCopiesQtd() << std::endl;
-
-                    ms.restartMetrics();
+                    file << std::fixed;
+                    file << std::setprecision(6);
+                    file << N << "  " << time << " " << ms.getComparisonsQtd() << " " << ms.getCopiesQtd() << std::endl;
                 }
                 break;
             
@@ -229,21 +295,32 @@ int main(int argc, char **argv)
                 for (int i = 0; i < 5; i++)
                 {
                     Registers hs(s, N);
+
+                    s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    
                     hs.heapSort();
+
+                    getrusage(RUSAGE_SELF, &resources);
+                    s_end = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
+                    u_end = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
                     total_comp += hs.getComparisonsQtd();
                     total_copy += hs.getCopiesQtd();
-                    total_time += hs.getProcessingTime();
+                    time = (s_end - s_start) + (u_end - u_start);
+                    total_time += time;
 
-                    file << N << "  " << hs.getProcessingTime() << " " << hs.getComparisonsQtd() << " " << hs.getCopiesQtd() << std::endl;
-
-                    hs.restartMetrics();
+                    file << std::fixed;
+                    file << std::setprecision(6);
+                    file << N << "  " << time << " " << hs.getComparisonsQtd() << " " << hs.getCopiesQtd() << std::endl;
                 }
                 break;
 
             default:
                 break;
         }
+        file << std::fixed;
+        file << std::setprecision(6);
         file << "AVR  " << N << "  " << total_time / 5 << " " << total_comp / 5 << " " << total_copy / 5 << std::endl;
         total_comp = 0;
         total_copy = 0;
