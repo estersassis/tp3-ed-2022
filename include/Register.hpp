@@ -14,7 +14,7 @@ class Register {
     private:
         int key;
         int num[10];
-        std::string ch[15][200];
+        char ch[15][200];
 
 };
 
