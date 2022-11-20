@@ -3,14 +3,13 @@
 #include <string>
 #include "Register.hpp"
 
-class Registers
-{
+class Registers {
 
     public:
         Registers(int seed, int N);
         ~Registers();
 
-        // Functions for metrics acess
+        // Functions for metrics access
         double getProcessingTime();
         int getComparisonsQtd();
         int getCopiesQtd();
