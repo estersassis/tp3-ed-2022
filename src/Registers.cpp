@@ -21,7 +21,7 @@ Registers::Registers(int seed, int N) {
     }
 }
 
-Registers::~Registers(){}
+Registers::~Registers() { delete[] this->regs; }
 
 // METRICS ACCESS
 

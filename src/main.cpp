@@ -125,67 +125,70 @@ int main(int argc, char **argv)
     for (int i = 0; i < running_count; i++)
     {
         buffer >> N;
-        Registers regs(s, N);
 
         switch (opchoose)
         {
             case QUICKSORTREC:
                 for (int i = 0; i < 5; i++)
                 {
-                    regs.quickSortRecursive();
+                    Registers qsr(s, N);
+                    qsr.quickSortRecursive();
 
-                    total_comp += regs.getComparisonsQtd();
-                    total_copy += regs.getCopiesQtd();
-                    total_time += regs.getProcessingTime();
+                    total_comp += qsr.getComparisonsQtd();
+                    total_copy += qsr.getCopiesQtd();
+                    total_time += qsr.getProcessingTime();
 
-                    file << N << "  " << regs.getProcessingTime() << " " << regs.getComparisonsQtd() << " " << regs.getCopiesQtd() << std::endl;
-                    
-                    regs.restartMetrics();
+                    file << N << "  " << qsr.getProcessingTime() << " " << qsr.getComparisonsQtd() << " " << qsr.getCopiesQtd() << std::endl;
+
+                    qsr.restartMetrics();
                 }
                 break;
 
             case QUICKSORTMED:
                 for (int i = 0; i < 5; i++)
                 {
-                    regs.quickSortMedian(k);
+                    Registers qsm(s, N);
+                    qsm.quickSortMedian(k);
 
-                    total_comp += regs.getComparisonsQtd();
-                    total_copy += regs.getCopiesQtd();
-                    total_time += regs.getProcessingTime();
+                    total_comp += qsm.getComparisonsQtd();
+                    total_copy += qsm.getCopiesQtd();
+                    total_time += qsm.getProcessingTime();
 
-                    file << N << "  " << regs.getProcessingTime() << " " << regs.getComparisonsQtd() << " " << regs.getCopiesQtd() << std::endl;
+                    file << N << "  " << qsm.getProcessingTime() << " " << qsm.getComparisonsQtd() << " " << qsm.getCopiesQtd() << std::endl;
 
-                    regs.restartMetrics();
+                    qsm.restartMetrics();
                 }
                 break;
          
             case QUICKSORTSELECT:
                 for (int i = 0; i < 5; i++)
                 {
-                    regs.quickSortSelection(m);
+                    Registers qss(s, N);
+                    qss.quickSortSelection(m);
 
-                    total_comp += regs.getComparisonsQtd();
-                    total_copy += regs.getCopiesQtd();
-                    total_time += regs.getProcessingTime();
+                    total_comp += qss.getComparisonsQtd();
+                    total_copy += qss.getCopiesQtd();
+                    total_time += qss.getProcessingTime();
 
-                    file << N << "  " << regs.getProcessingTime() << " " << regs.getComparisonsQtd() << " " << regs.getCopiesQtd() << std::endl;
+                    file << N << "  " << qss.getProcessingTime() << " " << qss.getComparisonsQtd() << " " << qss.getCopiesQtd() << std::endl;
 
-                    regs.restartMetrics();
+                    qss.restartMetrics();
                 }
                 break;
            
             case QUICKSORTITR:
                 for (int i = 0; i < 5; i++)
                 {
-                    regs.quickSortNonRecursive();
+                    Registers qsi(s, N);
+                    qsi.quickSortNonRecursive();
 
-                    total_comp += regs.getComparisonsQtd();
-                    total_copy += regs.getCopiesQtd();
-                    total_time += regs.getProcessingTime();
+                    total_comp += qsi.getComparisonsQtd();
+                    total_copy += qsi.getCopiesQtd();
+                    total_time += qsi.getProcessingTime();
 
-                    file << N << "  " << regs.getProcessingTime() << " " << regs.getComparisonsQtd() << " " << regs.getCopiesQtd() << std::endl;
+                    file << N << "  " << qsi.getProcessingTime() << " " << qsi.getComparisonsQtd() << " " << qsi.getCopiesQtd() << std::endl;
 
-                    regs.restartMetrics();
+                    qsi.restartMetrics();
                 }
                 
                 break;
@@ -193,45 +196,48 @@ int main(int argc, char **argv)
             case QUICKSORTIRTSMART:
                 for (int i = 0; i < 5; i++)
                 {
-                    regs.quickSortSmartStack();
+                    Registers qsis(s, N);
+                    qsis.quickSortSmartStack();
 
-                    total_comp += regs.getComparisonsQtd();
-                    total_copy += regs.getCopiesQtd();
-                    total_time += regs.getProcessingTime();
+                    total_comp += qsis.getComparisonsQtd();
+                    total_copy += qsis.getCopiesQtd();
+                    total_time += qsis.getProcessingTime();
 
-                    file << N << "  " << regs.getProcessingTime() << " " << regs.getComparisonsQtd() << " " << regs.getCopiesQtd() << std::endl;
+                    file << N << "  " << qsis.getProcessingTime() << " " << qsis.getComparisonsQtd() << " " << qsis.getCopiesQtd() << std::endl;
 
-                    regs.restartMetrics();
+                    qsis.restartMetrics();
                 }
                 break;
 
             case MERGESORT:
                 for (int i = 0; i < 5; i++)
                 {
-                    regs.mergeSort();
+                    Registers ms(s, N);
+                    ms.mergeSort();
 
-                    total_comp += regs.getComparisonsQtd();
-                    total_copy += regs.getCopiesQtd();
-                    total_time += regs.getProcessingTime();
+                    total_comp += ms.getComparisonsQtd();
+                    total_copy += ms.getCopiesQtd();
+                    total_time += ms.getProcessingTime();
 
-                    file << N << "  " << regs.getProcessingTime() << " " << regs.getComparisonsQtd() << " " << regs.getCopiesQtd() << std::endl;
+                    file << N << "  " << ms.getProcessingTime() << " " << ms.getComparisonsQtd() << " " << ms.getCopiesQtd() << std::endl;
 
-                    regs.restartMetrics();
+                    ms.restartMetrics();
                 }
                 break;
             
             case HEAPSORT:
                 for (int i = 0; i < 5; i++)
                 {
-                    regs.heapSort();
+                    Registers hs(s, N);
+                    hs.heapSort();
 
-                    total_comp += regs.getComparisonsQtd();
-                    total_copy += regs.getCopiesQtd();
-                    total_time += regs.getProcessingTime();
+                    total_comp += hs.getComparisonsQtd();
+                    total_copy += hs.getCopiesQtd();
+                    total_time += hs.getProcessingTime();
 
-                    file << N << "  " << regs.getProcessingTime() << " " << regs.getComparisonsQtd() << " " << regs.getCopiesQtd() << std::endl;
+                    file << N << "  " << hs.getProcessingTime() << " " << hs.getComparisonsQtd() << " " << hs.getCopiesQtd() << std::endl;
 
-                    regs.restartMetrics();
+                    hs.restartMetrics();
                 }
                 break;
 
@@ -239,7 +245,9 @@ int main(int argc, char **argv)
                 break;
         }
         file << "AVR  " << N << "  " << total_time / 5 << " " << total_comp / 5 << " " << total_copy / 5 << std::endl;
+        total_comp = 0;
+        total_copy = 0;
+        total_time = 0.0;
     }
-
     file.close();
 }

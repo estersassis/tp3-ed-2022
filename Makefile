@@ -20,8 +20,8 @@
 #
 
 # cc and flags
-CC = g++
-CFLAGS = -std=c++11 -g -Wall -c -I $(INC)
+CC = g++ -pg
+CFLAGS = -std=c++11 -g -Wall -c -pg -I $(INC)
 
 # folders
 INC = include
