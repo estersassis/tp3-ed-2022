@@ -20,6 +20,7 @@
 static int opchoose;
 int regmem;
 std::string inpfilename, outfilename, sorttechnique;
+std::string logname = "log.out";
 int N, m, k, s;
 
 void use()
@@ -47,7 +48,7 @@ void parseArgs(int argc, char **argv) {
     opchoose = -1;
     regmem = 0;
 
-    while ((c = getopt(argc, argv, "v:s:m:k:i:o:h")) != EOF){
+    while ((c = getopt(argc, argv, "v:s:m:k:i:o:hl")) != EOF){
         switch (c)
         {
             case 'v':
@@ -92,6 +93,9 @@ void parseArgs(int argc, char **argv) {
             case 'o':
                 outfilename = optarg;
                 break;
+            case 'l':
+                regmem = 1;
+                break;
             case 'h':
                 use();
                 exit(1);
@@ -104,6 +108,15 @@ int main(int argc, char **argv)
     sorttechnique = argv[1];
 
     parseArgs(argc, argv);
+
+    iniciaMemLog((char *)logname.c_str());
+
+    if (regmem){
+        ativaMemLog();
+    }
+    else{
+        desativaMemLog();
+    }
 
     std::ifstream inpfile;
     inpfile.open(inpfilename);
@@ -126,7 +139,7 @@ int main(int argc, char **argv)
     struct rusage resources;
     double u_end, u_start, s_end, s_start;
 
-    for (int i = 0; i < running_count; i++)
+    for (int j = 0; j < running_count; j++)
     {
         buffer >> N;
 
@@ -141,6 +154,7 @@ int main(int argc, char **argv)
                     s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
                     u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
+                    defineFaseMemLog(j);
                     qsr.quickSortRecursive();
 
                     getrusage(RUSAGE_SELF, &resources);
@@ -167,6 +181,7 @@ int main(int argc, char **argv)
                     s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
                     u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
+                    defineFaseMemLog(j);
                     qsm.quickSortMedian(k);
 
                     getrusage(RUSAGE_SELF, &resources);
@@ -194,6 +209,7 @@ int main(int argc, char **argv)
                     s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
                     u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
+                    defineFaseMemLog(j);
                     qss.quickSortSelection(m);
 
                     getrusage(RUSAGE_SELF, &resources);
@@ -221,6 +237,7 @@ int main(int argc, char **argv)
                     s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
                     u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
+                    defineFaseMemLog(j);
                     qsi.quickSortNonRecursive();
 
                     getrusage(RUSAGE_SELF, &resources);
@@ -248,6 +265,7 @@ int main(int argc, char **argv)
                     s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
                     u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
+                    defineFaseMemLog(j);
                     qsis.quickSortSmartStack();
 
                     getrusage(RUSAGE_SELF, &resources);
@@ -274,6 +292,7 @@ int main(int argc, char **argv)
                     s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
                     u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
+                    defineFaseMemLog(j);
                     ms.mergeSort();
 
                     getrusage(RUSAGE_SELF, &resources);
@@ -299,6 +318,7 @@ int main(int argc, char **argv)
                     s_start = (double)resources.ru_stime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
                     u_start = (double)resources.ru_utime.tv_sec + 1.e-6 * (double)resources.ru_stime.tv_usec;
 
+                    defineFaseMemLog(j);
                     hs.heapSort();
 
                     getrusage(RUSAGE_SELF, &resources);

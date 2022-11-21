@@ -1,0 +1,9 @@
+Number of Elements   Time of Processing
+100  0.000666
+100  0.000602
+100  0.000608
+100  0.000686
+100  0.000728
+Average time: 0.000658
+Total copy: 192
+Total comparisson: 383
