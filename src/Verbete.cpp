@@ -23,6 +23,11 @@ Verbete::Verbete()
 
 }
 
+int Verbete::getTam()
+{
+    return this->tam;
+}
+
 std::string Verbete::getVerbete()
 {
     return this->verbete;

@@ -31,6 +31,43 @@ void ListaEncadeada::limpa()
     tamanho = 0;
 }
 
+void ListaEncadeada::remove(std::string _verbete) {
+    Verbete aux;
+    ListaCelula *p, *q;
+    // Posiociona p na célula anterior ao item procurado
+    p = primeiro;
+    while ((p->prox != NULL) && (p->prox->item.getVerbete() != _verbete))
+        p = p->prox;
+    // remove a célula contendo o item, retornando-o
+    if (p->prox == NULL)
+        throw "Erro: item não está presente";
+    else
+    {
+        q = p->prox;
+        p->prox = q->prox;
+        aux = q->item;
+        delete q;
+        tamanho--;
+        if (p->prox == NULL)
+            ultimo = p;
+    }
+}
+
+void ListaEncadeada::removeVerbetes() {
+    ListaCelula *p;
+    p = primeiro->prox;
+
+    while (p != NULL)
+    {
+        if (p->item.getTam() > 0)
+        {
+            this->remove(p->item.getVerbete());
+        }
+        
+        p = p->prox;
+    }
+}
+
 Verbete ListaEncadeada::pesquisa(std::string c) {
     Verbete aux;
     ListaCelula *p;

@@ -20,6 +20,10 @@ int main() {
     d.insertSiginificado(a);
     d.insertSiginificado(b);
 
+    Verbete g(10);
+    g.setTipo('a');
+    g.setVerbete("batas");
+
     Verbete f(10);
     f.setTipo('a');
     f.setVerbete("botas");
@@ -28,8 +32,10 @@ int main() {
     ListaEncadeada e;
     e.insere(f);
     e.insere(d);
-    
+    e.insere(g);
 
     e.print();
-
+    std::cout << "--------------------------" << std::endl;
+    e.removeVerbetes();
+    e.print();
 }
