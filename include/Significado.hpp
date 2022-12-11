@@ -8,8 +8,9 @@ class Significado {
         std::string text;
 
     public:
-        Significado(std::string _text);
+        Significado();
         std::string getText();
+        void setText(std::string _text);
 };
 
 #endif
