@@ -2,6 +2,7 @@
 #include "Significado.hpp"
 #include "Verbete.hpp"
 #include "DicionarioHash.hpp"
+#include "DicionarioAVL.hpp"
 #include "ListaEncadeada.hpp"
 
 int main() {
@@ -39,12 +40,19 @@ int main() {
     // e.removeVerbetes();
     // e.print();
 
-    DicionarioHash h(10);
-    h.insere(d);
-    h.insere(f);
-    h.insere(g);
-    h.imprimeDic();
-    std::cout << "--------------------------" << std::endl;
-    h.removeDic();
-    h.imprimeDic();
+    // DicionarioHash h(10);
+    // h.insere(d);
+    // h.insere(f);
+    // h.insere(g);
+    // h.imprimeDic();
+    // std::cout << "--------------------------" << std::endl;
+    // h.removeDic();
+    // h.imprimeDic();
+
+    DicionarioAVL avl(10);
+
+    avl.insere(d);
+    avl.insere(f);
+    avl.insere(g);
+    avl.imprimeDic();
 }

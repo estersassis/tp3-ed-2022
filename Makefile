@@ -30,8 +30,8 @@ OBJ = obj
 SRC = src
 
 # all sources, objs, and header files
-OBJS = $(OBJ)/Significado.o $(OBJ)/Verbete.o $(OBJ)/ListaCelula.o $(OBJ)/ListaEncadeada.o $(OBJ)/Dicionario.o $(OBJ)/DicionarioHash.o $(OBJ)/main.o $(OBJ)/memlog.o
-HDRS = $(INC)/Significado.hpp $(INC)/Verbete.hpp $(INC)/ListaCelula.hpp $(INC)/ListaEncadeada.hpp $(INC)/Dicionario.hpp $(INC)/DicionarioHash.hpp $(INC)/memlog.h $(INC)/msgassert.h 
+OBJS = $(OBJ)/Significado.o $(OBJ)/Verbete.o $(OBJ)/ListaCelula.o $(OBJ)/ListaEncadeada.o $(OBJ)/Dicionario.o $(OBJ)/DicionarioHash.o $(OBJ)/DicionarioAVL.o $(OBJ)/Node.o  $(OBJ)/main.o $(OBJ)/memlog.o
+HDRS = $(INC)/Significado.hpp $(INC)/Verbete.hpp $(INC)/ListaCelula.hpp $(INC)/ListaEncadeada.hpp $(INC)/Dicionario.hpp $(INC)/DicionarioHash.hpp $(INC)/DicionarioAVL.hpp $(INC)/Node.hpp $(INC)/memlog.h $(INC)/msgassert.h 
 
 TARGET = $(BIN)/run.out
 
@@ -60,6 +60,12 @@ $(OBJ)/Dicionario.o: $(HDRS) $(SRC)/Dicionario.cpp
 
 $(OBJ)/DicionarioHash.o: $(HDRS) $(SRC)/DicionarioHash.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/DicionarioHash.o $(SRC)/DicionarioHash.cpp
+
+$(OBJ)/Node.o: $(HDRS) $(SRC)/Node.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/Node.o $(SRC)/Node.cpp
+
+$(OBJ)/DicionarioAVL.o: $(HDRS) $(SRC)/DicionarioAVL.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/DicionarioAVL.o $(SRC)/DicionarioAVL.cpp
 
 $(OBJ)/memlog.o: $(HDRS) $(SRC)/memlog.c
 	$(CC) $(CFLAGS) -o $(OBJ)/memlog.o $(SRC)/memlog.c 
