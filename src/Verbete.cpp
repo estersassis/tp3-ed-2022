@@ -4,7 +4,31 @@
 
 Verbete::Verbete(){}
 
-void Verbete::setVerbete(char _tipo, std::string _verbete) {
+Verbete::Verbete(Verbete &_item)
+{
+    this->tipo = _item.tipo;
+    this->verbete = _item.verbete;
+
+    FilaCelula *p;
+    Significado aux;
+    p = _item.fila.frente->prox;
+
+    while (p != NULL)
+    {
+        aux.setText(p->item.getText());
+        this->fila.enfileira(aux);
+        
+        p = p->prox;
+    }
+}
+
+std::string Verbete::getVerbete()
+{
+    return this->verbete;
+}
+
+void Verbete::setVerbete(char _tipo, std::string _verbete)
+{
     this->tipo = _tipo;
     this->verbete = _verbete;
 }

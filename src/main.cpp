@@ -3,9 +3,17 @@
 #include "Significado.hpp"
 #include "Verbete.hpp"
 #include "DicionarioHash.hpp"
+#include "ListaEncadeada.hpp"
 
 int main() {
-    
-    DicionarioHash dic(100);
-    dic.Hash("abcdefghijklmnopqrstuvwxyz");
+
+    ListaEncadeada test;
+
+    Verbete verb;
+    verb.setVerbete('a', "balface");
+    verb.insertSiginificado("Alfaces são boas apenas com molho Caeser.");
+ 
+    test.insere(verb);
+    test.print();
+
 }

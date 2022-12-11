@@ -18,6 +18,8 @@ class FilaSignificado {
         void enfileira(Significado item);
         void limpa();
         void print();
+    
+    friend class Verbete;
 };
 
 #endif

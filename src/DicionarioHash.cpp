@@ -14,11 +14,11 @@ int DicionarioHash::Hash(std::string _verbete) {
     return int(_verbete[0]);
 }
 
-Verbete DicionarioHash::pesquisa(std::string _verbete)
-{
-    int pos;
-    Verbete item;
-    pos = Hash(_verbete);
-    item = this->dicionario[pos].pesquisa(_verbete);
-    return item;
-}
+// Verbete DicionarioHash::pesquisa(std::string _verbete)
+// {
+//     int pos;
+//     Verbete item;
+//     pos = Hash(_verbete);
+//     item = this->dicionario[pos].pesquisa(_verbete);
+//     return item;
+// }

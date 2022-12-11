@@ -13,6 +13,7 @@ class FilaCelula {
         FilaCelula();
     
     friend class FilaSignificado;
+    friend class Verbete;
 };
 
 #endif

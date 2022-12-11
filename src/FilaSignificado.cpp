@@ -20,6 +20,7 @@ void FilaSignificado::enfileira(Significado item) {
     nova->item = item;
     this->tras->prox = nova;
     this->tras = nova;
+
     tamanho++;
 }
 
@@ -40,8 +41,10 @@ void FilaSignificado::limpa() {
 void FilaSignificado::print() {
 
     FilaCelula *p;
+
     int i = 1;
-    p = frente->prox;
+    p = this->frente->prox;
+
     while (p != NULL)
     {
         std::cout << i << ". " << p->item.getText() << std::endl;

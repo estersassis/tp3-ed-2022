@@ -12,8 +12,10 @@ class Verbete {
 
     public:
         Verbete();
+        Verbete(Verbete &_item);
 
         void print();
+        std::string getVerbete();
         void setVerbete(char _tipo, std::string _verbete); 
         void insertSiginificado(std::string _text);
 };

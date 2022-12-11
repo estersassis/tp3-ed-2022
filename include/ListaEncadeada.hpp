@@ -20,7 +20,7 @@ class ListaEncadeada
 
         Verbete pesquisa(std::string c);
         void insere(Verbete item);
-        int discoverPosition(Verbete item);
+        int discoverPosition(std::string _verbete);
         void removeVerbetes();
 
         void limpa();

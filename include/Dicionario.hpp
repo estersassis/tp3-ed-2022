@@ -11,8 +11,8 @@ class Dicionario {
     public:
         Dicionario(int tamanho);
 
-        virtual Verbete pesquisa(std::string _verbete);
-        virtual int insere(Verbete *it) = 0;
+        // virtual Verbete pesquisa(std::string _verbete);
+        // virtual void insere(Verbete *it) = 0;
         // virtual int imprimeDic() = 0;
         // virtual int atualizaDic(Verbete *it) = 0;
         // virtual int removeDic(Verbete *it) = 0;
