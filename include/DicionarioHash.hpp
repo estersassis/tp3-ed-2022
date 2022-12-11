@@ -17,9 +17,8 @@ class DicionarioHash: Dicionario {
         int Hash(std::string _verbete);
         int pesquisa(std::string _verbete);
         void insere(Verbete it);
-        // int imprimeDic();
-        // int atualizaDic(Verbete *it);
-        // int removeDic(Verbete *it);
+        void imprimeDic();
+        void removeDic();
         
 };
 

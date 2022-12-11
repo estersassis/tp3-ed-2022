@@ -9,11 +9,11 @@ ListaEncadeada::ListaEncadeada()
     this->ultimo = primeiro;
 }
 
-ListaEncadeada::~ListaEncadeada()
-{
-    limpa();
-    delete this->primeiro;
-}
+// ListaEncadeada::~ListaEncadeada()
+// {
+//     limpa();
+//     delete this->primeiro;
+// }
 
 void ListaEncadeada::limpa()
 {

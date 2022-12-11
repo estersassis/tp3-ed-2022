@@ -29,13 +29,22 @@ int main() {
     f.setVerbete("botas");
     f.insertSiginificado(c);
 
-    ListaEncadeada e;
-    e.insere(f);
-    e.insere(d);
-    e.insere(g);
+    // ListaEncadeada e;
+    // e.insere(f);
+    // e.insere(d);
+    // e.insere(g);
 
-    e.print();
+    // e.print();
+    // std::cout << "--------------------------" << std::endl;
+    // e.removeVerbetes();
+    // e.print();
+
+    DicionarioHash h(10);
+    h.insere(d);
+    h.insere(f);
+    h.insere(g);
+    h.imprimeDic();
     std::cout << "--------------------------" << std::endl;
-    e.removeVerbetes();
-    e.print();
+    h.removeDic();
+    h.imprimeDic();
 }

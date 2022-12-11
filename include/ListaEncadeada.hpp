@@ -16,7 +16,7 @@ class ListaEncadeada
 
     public:
         ListaEncadeada();
-        ~ListaEncadeada();
+        // ~ListaEncadeada();
 
         Verbete pesquisa(std::string c);
         void insere(Verbete item);
