@@ -1,18 +1,22 @@
 #ifndef FILACELULA_H
 #define FILACELULA_H
-#include "Celula.hpp"
 #include "Significado.hpp"
+#include "FilaSignificado.hpp"
 #include <string>
 
-class FilaCelula: Celula {
+class FilaCelula {
 
     private:
         Significado item;
+        FilaCelula *prox;
 
     public:
-        FilaCelula(std::string _text) {
-            this->item.setText(_text);
+        FilaCelula() {
+            this->item.setText("");
+            prox = NULL;
         };
+    
+    friend class FilaSignificado;
 };
 
 #endif
