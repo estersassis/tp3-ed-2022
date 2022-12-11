@@ -1,7 +1,6 @@
 #ifndef FILACELULA_H
 #define FILACELULA_H
 #include "Significado.hpp"
-#include "FilaSignificado.hpp"
 #include <string>
 
 class FilaCelula {
@@ -11,10 +10,7 @@ class FilaCelula {
         FilaCelula *prox;
 
     public:
-        FilaCelula() {
-            this->item.setText("");
-            prox = NULL;
-        };
+        FilaCelula();
     
     friend class FilaSignificado;
 };

@@ -40,12 +40,12 @@ void FilaSignificado::limpa() {
 void FilaSignificado::print() {
 
     FilaCelula *p;
-    int i = 0;
+    int i = 1;
     p = frente->prox;
     while (p != NULL)
     {
         std::cout << i << ". " << p->item.getText() << std::endl;
-        p = frente->prox;
+        p = p->prox;
         i++;
     }
 }

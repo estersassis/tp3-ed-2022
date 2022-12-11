@@ -30,8 +30,8 @@ OBJ = obj
 SRC = src
 
 # all sources, objs, and header files
-OBJS = $(OBJ)/Registers.o $(OBJ)/Register.o $(OBJ)/main.o $(OBJ)/memlog.o
-HDRS = $(INC)/Registers.hpp $(INC)/memlog.h $(INC)/msgassert.h $(INC)/Register.hpp 
+OBJS = $(OBJ)/Significado.o $(OBJ)/FilaCelula.o $(OBJ)/FilaSignificado.o $(OBJ)/main.o $(OBJ)/memlog.o
+HDRS = $(INC)/Significado.hpp $(INC)/FilaCelula.hpp $(INC)/FilaSignificado.hpp $(INC)/memlog.h $(INC)/msgassert.h 
 
 TARGET = $(BIN)/run.out
 
@@ -43,11 +43,14 @@ $(TARGET): $(OBJS)
 $(OBJ)/main.o: $(HDRS) $(SRC)/main.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/main.o $(SRC)/main.cpp
 
-$(OBJ)/Register.o: $(HDRS) $(SRC)/Register.cpp
-	$(CC) $(CFLAGS) -o $(OBJ)/Register.o $(SRC)/Register.cpp 
+$(OBJ)/Significado.o: $(HDRS) $(SRC)/Significado.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/Significado.o $(SRC)/Significado.cpp 
 
-$(OBJ)/Registers.o: $(HDRS) $(SRC)/Registers.cpp
-	$(CC) $(CFLAGS) -o $(OBJ)/Registers.o $(SRC)/Registers.cpp
+$(OBJ)/FilaCelula.o: $(HDRS) $(SRC)/FilaCelula.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/FilaCelula.o $(SRC)/FilaCelula.cpp
+
+$(OBJ)/FilaSignificado.o: $(HDRS) $(SRC)/FilaSignificado.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/FilaSignificado.o $(SRC)/FilaSignificado.cpp
 
 $(OBJ)/memlog.o: $(HDRS) $(SRC)/memlog.c
 	$(CC) $(CFLAGS) -o $(OBJ)/memlog.o $(SRC)/memlog.c 
