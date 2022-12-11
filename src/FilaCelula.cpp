@@ -2,5 +2,5 @@
 
 FilaCelula::FilaCelula() {
     this->item.setText("");
-    prox = NULL;
+    this->prox = NULL;
 };

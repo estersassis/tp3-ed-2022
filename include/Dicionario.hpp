@@ -5,14 +5,17 @@
 
 class Dicionario {
 
+    protected:
+        int tamanho;
+
     public:
-        Dicionario *criaDic(int N);
-        virtual int pesquisaDic(Dicionario *dic, Verbete *it){return -1;};
-        virtual int insereDic(Dicionario *dic, Verbete *it){return -1;};
-        virtual int imprimeDic(Dicionario *dic){return -1;};
-        virtual int atualizaDic(Dicionario *dic, Verbete *it){return -1;};
-        virtual int removeDic(Dicionario *dic, Verbete *it){return -1;};
-        virtual int destroiDic(Dicionario *dic){return -1;};
+        Dicionario(int tamanho);
+
+        virtual Verbete pesquisa(std::string _verbete);
+        virtual int insere(Verbete *it) = 0;
+        // virtual int imprimeDic() = 0;
+        // virtual int atualizaDic(Verbete *it) = 0;
+        // virtual int removeDic(Verbete *it) = 0;
 
 };
 

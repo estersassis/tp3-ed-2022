@@ -30,8 +30,8 @@ OBJ = obj
 SRC = src
 
 # all sources, objs, and header files
-OBJS = $(OBJ)/Significado.o $(OBJ)/FilaCelula.o $(OBJ)/FilaSignificado.o $(OBJ)/Verbete.o $(OBJ)/main.o $(OBJ)/memlog.o
-HDRS = $(INC)/Significado.hpp $(INC)/FilaCelula.hpp $(INC)/FilaSignificado.hpp $(INC)/Verbete.hpp $(INC)/memlog.h $(INC)/msgassert.h 
+OBJS = $(OBJ)/Significado.o $(OBJ)/FilaCelula.o $(OBJ)/FilaSignificado.o $(OBJ)/Verbete.o $(OBJ)/ListaCelula.o $(OBJ)/ListaEncadeada.o $(OBJ)/Dicionario.o $(OBJ)/DicionarioHash.o $(OBJ)/main.o $(OBJ)/memlog.o
+HDRS = $(INC)/Significado.hpp $(INC)/FilaCelula.hpp $(INC)/FilaSignificado.hpp $(INC)/Verbete.hpp $(INC)/ListaCelula.hpp $(INC)/ListaEncadeada.hpp $(INC)/Dicionario.hpp $(INC)/DicionarioHash.hpp $(INC)/memlog.h $(INC)/msgassert.h 
 
 TARGET = $(BIN)/run.out
 
@@ -54,6 +54,18 @@ $(OBJ)/FilaSignificado.o: $(HDRS) $(SRC)/FilaSignificado.cpp
 
 $(OBJ)/Verbete.o: $(HDRS) $(SRC)/Verbete.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/Verbete.o $(SRC)/Verbete.cpp
+
+$(OBJ)/ListaCelula.o: $(HDRS) $(SRC)/ListaCelula.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/ListaCelula.o $(SRC)/ListaCelula.cpp
+
+$(OBJ)/ListaEncadeada.o: $(HDRS) $(SRC)/ListaEncadeada.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/ListaEncadeada.o $(SRC)/ListaEncadeada.cpp
+
+$(OBJ)/Dicionario.o: $(HDRS) $(SRC)/Dicionario.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/Dicionario.o $(SRC)/Dicionario.cpp
+
+$(OBJ)/DicionarioHash.o: $(HDRS) $(SRC)/DicionarioHash.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/DicionarioHash.o $(SRC)/DicionarioHash.cpp
 
 $(OBJ)/memlog.o: $(HDRS) $(SRC)/memlog.c
 	$(CC) $(CFLAGS) -o $(OBJ)/memlog.o $(SRC)/memlog.c 
