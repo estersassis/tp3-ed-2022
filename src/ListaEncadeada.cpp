@@ -11,8 +11,24 @@ ListaEncadeada::ListaEncadeada()
 
 ListaEncadeada::~ListaEncadeada()
 {
+    limpa();
     delete this->primeiro;
-    delete this->ultimo;
+}
+
+void ListaEncadeada::limpa()
+{
+    ListaCelula *p;
+    p = primeiro->prox;
+
+    while (p != NULL)
+    {
+        primeiro->prox = p->prox;
+        delete p;
+        p = primeiro->prox;
+    }
+
+    ultimo = primeiro;
+    tamanho = 0;
 }
 
 Verbete ListaEncadeada::pesquisa(std::string c) {
@@ -29,6 +45,7 @@ Verbete ListaEncadeada::pesquisa(std::string c) {
         p = p->prox;
     }
     return aux;
+
 }
 
 ListaCelula *ListaEncadeada::posiciona(int pos, bool antes = false)
@@ -68,18 +85,21 @@ int ListaEncadeada::discoverPosition(std::string _verbete)
 void ListaEncadeada::insere(Verbete item)
 {
     int pos = this->discoverPosition(item.getVerbete());
-
+    
     ListaCelula *p, *nova;
     p = posiciona(pos, true);
 
     nova = new ListaCelula();
     nova->item = item;
+    
     nova->prox = p->prox;
     p->prox = nova;
+    
     tamanho++;
 
     if (nova->prox == NULL)
         ultimo = nova;
+    
 };
 
 void ListaEncadeada::print() {
@@ -91,4 +111,5 @@ void ListaEncadeada::print() {
         p->prox->item.print();
         p = p->prox;
     }
+
 }

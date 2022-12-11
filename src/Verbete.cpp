@@ -14,7 +14,14 @@ Verbete::Verbete(int _n) {
         this->significados[i] = Significado();
     }
 }
-Verbete::~Verbete() { delete[] this->significados; }
+Verbete::Verbete()
+{
+    this->tam = 0;
+
+    this->significados = new Significado[1];
+    this->significados[0] = Significado();
+
+}
 
 std::string Verbete::getVerbete()
 {
@@ -40,7 +47,7 @@ void Verbete::insertSiginificado(Significado _significado)
 void Verbete::print() {
     std::cout << this->verbete << "(" << this->tipo << ")" << std::endl;
     
-    for (int i = 0; i < tam + 1; i++)
+    for (int i = 0; i < tam; i++)
     {
         int num = i + 1;
         std::cout << num << ". " << this->significados[i].getText() << std::endl;

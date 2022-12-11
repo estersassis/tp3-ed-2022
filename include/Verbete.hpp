@@ -1,6 +1,7 @@
 #ifndef VERBETE_H
 #define VERBETE_H
 #include <string>
+#include "Significado.hpp"
 
 class Verbete {
 
@@ -12,7 +13,7 @@ class Verbete {
 
     public:
         Verbete(int _n);
-        ~Verbete();
+        Verbete();
 
         void print();
 

@@ -2,6 +2,6 @@
 
 ListaCelula::ListaCelula()
 {
-    this->item.setVerbete('?', "");
+    this->item.setVerbete("");
     this->prox = NULL;
 };
