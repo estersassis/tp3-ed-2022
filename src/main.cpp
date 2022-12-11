@@ -1,19 +1,16 @@
 #include <iostream>
 #include "FilaSignificado.hpp"
 #include "Significado.hpp"
+#include "Verbete.hpp"
 
 int main() {
-    Significado test;
-    test.setText("Testando eficiencia.");
+    
+    Verbete test;
 
-    Significado test2;
-    test2.setText("Testando eficiencia 2.");
+    test.setVerbete('a', "Testinho");
+    
+    test.insertSiginificado("Testando 1");
+    test.insertSiginificado("Testando 2");
 
-    FilaSignificado fila;
-    fila.enfileira(test);
-    fila.enfileira(test2);
-
-    fila.limpa();
-
-    fila.print();
+    test.print();
 }

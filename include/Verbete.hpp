@@ -3,15 +3,19 @@
 #include "FilaSignificado.hpp"
 #include <string>
 
-class Verbete
-{
-    public:
-        void print();
+class Verbete {
 
     private:
         char tipo;
         std::string verbete;
         FilaSignificado fila;
+
+    public:
+        Verbete();
+
+        void print();
+        void setVerbete(char _tipo, std::string _verbete); 
+        void insertSiginificado(std::string _text);
 };
 
 #endif

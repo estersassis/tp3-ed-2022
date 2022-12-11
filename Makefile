@@ -30,8 +30,8 @@ OBJ = obj
 SRC = src
 
 # all sources, objs, and header files
-OBJS = $(OBJ)/Significado.o $(OBJ)/FilaCelula.o $(OBJ)/FilaSignificado.o $(OBJ)/main.o $(OBJ)/memlog.o
-HDRS = $(INC)/Significado.hpp $(INC)/FilaCelula.hpp $(INC)/FilaSignificado.hpp $(INC)/memlog.h $(INC)/msgassert.h 
+OBJS = $(OBJ)/Significado.o $(OBJ)/FilaCelula.o $(OBJ)/FilaSignificado.o $(OBJ)/Verbete.o $(OBJ)/main.o $(OBJ)/memlog.o
+HDRS = $(INC)/Significado.hpp $(INC)/FilaCelula.hpp $(INC)/FilaSignificado.hpp $(INC)/Verbete.hpp $(INC)/memlog.h $(INC)/msgassert.h 
 
 TARGET = $(BIN)/run.out
 
@@ -51,6 +51,9 @@ $(OBJ)/FilaCelula.o: $(HDRS) $(SRC)/FilaCelula.cpp
 
 $(OBJ)/FilaSignificado.o: $(HDRS) $(SRC)/FilaSignificado.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/FilaSignificado.o $(SRC)/FilaSignificado.cpp
+
+$(OBJ)/Verbete.o: $(HDRS) $(SRC)/Verbete.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/Verbete.o $(SRC)/Verbete.cpp
 
 $(OBJ)/memlog.o: $(HDRS) $(SRC)/memlog.c
 	$(CC) $(CFLAGS) -o $(OBJ)/memlog.o $(SRC)/memlog.c 
