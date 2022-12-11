@@ -2,24 +2,28 @@
 #include "Significado.hpp"
 #include <iostream>
 
-Verbete::Verbete(){}
+Verbete::Verbete(){
+    this->tipo = '?';
+    this->verbete = "";
+}
 
 Verbete::Verbete(Verbete &_item)
 {
     this->tipo = _item.tipo;
     this->verbete = _item.verbete;
+    this->fila = _item.fila;
 
-    FilaCelula *p;
-    Significado aux;
-    p = _item.fila.frente->prox;
+    // FilaCelula *p;
+    // Significado aux;
+    // p = _item.fila.frente->prox;
 
-    while (p != NULL)
-    {
-        aux.setText(p->item.getText());
-        this->fila.enfileira(aux);
+    // while (p != NULL)
+    // {
+    //     aux.setText(p->item.getText());
+    //     this->fila.enfileira(aux);
         
-        p = p->prox;
-    }
+    //     p = p->prox;
+    // }
 }
 
 std::string Verbete::getVerbete()

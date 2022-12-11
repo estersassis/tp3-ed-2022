@@ -7,13 +7,15 @@
 
 int main() {
 
-    ListaEncadeada test;
+   
+    DicionarioHash test(40);
 
-    Verbete verb;
-    verb.setVerbete('a', "balface");
-    verb.insertSiginificado("Alfaces são boas apenas com molho Caeser.");
- 
+    Verbete *verb = new Verbete();
+    verb->setVerbete('a', "Depressao");
+
     test.insere(verb);
-    test.print();
+
+    delete verb;
+
 
 }
