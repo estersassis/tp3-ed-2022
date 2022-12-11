@@ -2,49 +2,48 @@
 #include "Significado.hpp"
 #include <iostream>
 
-Verbete::Verbete(){
+Verbete::Verbete(int _n) {
+    this->n = _n;
+    this->tam = 0;
     this->tipo = '?';
     this->verbete = "";
+
+    this->significados = new Significado[_n];
+
+    for (int i = 0; i < _n; i++) {
+        this->significados[i] = Significado();
+    }
 }
-
-Verbete::Verbete(Verbete &_item)
-{
-    this->tipo = _item.tipo;
-    this->verbete = _item.verbete;
-    this->fila = _item.fila;
-
-    // FilaCelula *p;
-    // Significado aux;
-    // p = _item.fila.frente->prox;
-
-    // while (p != NULL)
-    // {
-    //     aux.setText(p->item.getText());
-    //     this->fila.enfileira(aux);
-        
-    //     p = p->prox;
-    // }
-}
+Verbete::~Verbete() { delete[] this->significados; }
 
 std::string Verbete::getVerbete()
 {
     return this->verbete;
 }
 
-void Verbete::setVerbete(char _tipo, std::string _verbete)
+void Verbete::setTipo(char _tipo)
 {
     this->tipo = _tipo;
+}
+
+void Verbete::setVerbete(std::string _verbete)
+{
     this->verbete = _verbete;
 }
 
-void Verbete::insertSiginificado(std::string _text) {
-    Significado novo;
-    novo.setText(_text);
-
-    this->fila.enfileira(novo);
+void Verbete::insertSiginificado(Significado _significado)
+{
+    this->significados[tam] = _significado;
+    tam++;  
 }
 
 void Verbete::print() {
     std::cout << this->verbete << "(" << this->tipo << ")" << std::endl;
-    this->fila.print();
+    
+    for (int i = 0; i < tam + 1; i++)
+    {
+        int num = i + 1;
+        std::cout << num << ". " << this->significados[i].getText() << std::endl;
+    }
+    
 }

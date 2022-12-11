@@ -20,24 +20,32 @@ int DicionarioHash::Hash(std::string _verbete) {
     return int(hashing) - 97;
 }
 
-Verbete DicionarioHash::pesquisa(std::string _verbete)
+int DicionarioHash::pesquisa(std::string _verbete)
 {
     int pos;
     Verbete item;
     pos = Hash(_verbete);
+    std::cout << pos << std::endl;
     item = dicionario[pos].pesquisa(_verbete);
-    return item;
+
+    if (item.getVerbete() != "") {
+        std::cout << "wwwwwwwww" << std::endl;
+        return -1;
+    }
+
+    return 0;
 }
 
-void DicionarioHash::insere(Verbete *it)
+void DicionarioHash::insere(Verbete it)
 {
     int pos;
-    Verbete aux;
+    int aux;
 
-    aux = this->pesquisa(it->getVerbete());
+    aux = this->pesquisa(it.getVerbete());
     std::cout << "wwwwwwwww" << std::endl;
 
-    if (aux.getVerbete() != "")
-        pos = Hash(it->getVerbete());
-    dicionario[pos].insere(*it);
+    if (aux == 0) {
+        pos = Hash(it.getVerbete());
+        dicionario[pos].insere(it);
+    }
 }

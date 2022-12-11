@@ -1,6 +1,5 @@
 #ifndef VERBETE_H
 #define VERBETE_H
-#include "FilaSignificado.hpp"
 #include <string>
 
 class Verbete {
@@ -8,16 +7,20 @@ class Verbete {
     private:
         char tipo;
         std::string verbete;
-        FilaSignificado fila;
+        int n, tam;
+        Significado *significados;
 
     public:
-        Verbete();
-        Verbete(Verbete &_item);
+        Verbete(int _n);
+        ~Verbete();
 
         void print();
+
         std::string getVerbete();
-        void setVerbete(char _tipo, std::string _verbete); 
-        void insertSiginificado(std::string _text);
+        void setTipo(char _tipo);
+        void setVerbete(std::string _verbete);
+
+        void insertSiginificado(Significado _significado);
 };
 
 #endif
