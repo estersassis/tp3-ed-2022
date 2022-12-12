@@ -17,6 +17,7 @@ Verbete::Verbete(int _n) {
 Verbete::Verbete()
 {
     this->tam = 0;
+    this->verbete = "";
 
     this->significados = new Significado[1];
     this->significados[0] = Significado();
@@ -31,6 +32,11 @@ int Verbete::getTam()
 std::string Verbete::getVerbete()
 {
     return this->verbete;
+}
+
+Significado Verbete::getSignificado()
+{
+    return this->significados[0];
 }
 
 void Verbete::setTipo(char _tipo)
@@ -49,13 +55,13 @@ void Verbete::insertSiginificado(Significado _significado)
     tam++;  
 }
 
-void Verbete::print() {
-    std::cout << this->verbete << "(" << this->tipo << ")" << std::endl;
-    
+void Verbete::print(std::ostream &outfile)
+{
+    outfile << this->verbete.c_str() << "(" << this->tipo << ")" << std::endl;
+
     for (int i = 0; i < tam; i++)
     {
         int num = i + 1;
-        std::cout << num << ". " << this->significados[i].getText() << std::endl;
+        outfile << num << ". " << this->significados[i].getText() << std::endl;
     }
-    
 }

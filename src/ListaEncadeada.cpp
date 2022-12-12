@@ -68,20 +68,20 @@ void ListaEncadeada::removeVerbetes() {
     }
 }
 
-Verbete ListaEncadeada::pesquisa(std::string c) {
-    Verbete aux;
+int ListaEncadeada::pesquisa(std::string c, Significado sig) {
     ListaCelula *p;
     p = primeiro->prox;
     while (p != NULL)
     {
+        
         if (p->item.getVerbete() == c)
         {
-            aux = p->item;
-            break;
+            p->item.insertSiginificado(sig);
+            return -1;
         }
         p = p->prox;
     }
-    return aux;
+    return 0;
 
 }
 
@@ -139,14 +139,14 @@ void ListaEncadeada::insere(Verbete item)
     
 };
 
-void ListaEncadeada::print() {
+void ListaEncadeada::print(std::ostream &outfile)
+{
     ListaCelula *p;
     p = primeiro;
 
     while (p->prox != NULL)
     {
-        p->prox->item.print();
+        p->prox->item.print(outfile);
         p = p->prox;
     }
-
 }

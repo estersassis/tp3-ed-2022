@@ -16,9 +16,8 @@ class DicionarioAVL : Dicionario
         DicionarioAVL(int _tamanho);
         ~DicionarioAVL();
 
-        int pesquisa(std::string _verbete);
         void insere(Verbete it);
-        void imprimeDic();
+        void imprimeDic(std::ostream &outfile);
         void removeDic();
 
         Node *rotations(Node *_node, std::string type);
@@ -32,7 +31,7 @@ class DicionarioAVL : Dicionario
         void pesquisaRecursive(Node *_node);
         int diff(Node *temp);
         int altura(Node *temp);
-        void imprimeRecursive(Node *_node);
+        void imprimeRecursive(Node *_node, std::ostream &outfile);
 };
 
 #endif

@@ -15,10 +15,11 @@ class Verbete {
         Verbete(int _n);
         Verbete();
 
-        void print();
+        void print(std::ostream &outfile);
 
         std::string getVerbete();
         int getTam();
+        Significado getSignificado();
         void setTipo(char _tipo);
         void setVerbete(std::string _verbete);
 

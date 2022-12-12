@@ -163,12 +163,12 @@ Node *DicionarioAVL::insereRecursive(Node *_node, Verbete it)
     return _node;
 }
 
-void DicionarioAVL::imprimeDic() 
+void DicionarioAVL::imprimeDic(std::ostream &outfile)
 {
-    imprimeRecursive(this->root);
+    imprimeRecursive(this->root, outfile);
 }
 
-void DicionarioAVL::imprimeRecursive(Node *_node)
+void DicionarioAVL::imprimeRecursive(Node *_node, std::ostream &outfile)
 {
     if (_node == NULL)
     {
@@ -176,12 +176,12 @@ void DicionarioAVL::imprimeRecursive(Node *_node)
     }
     
     if (_node->direita == NULL && _node->esquerda == NULL) {
-        _node->v.print();
+        _node->v.print(outfile);
         return;
     }
-    imprimeRecursive(_node->esquerda);
-    _node->v.print();
-    imprimeRecursive(_node->direita);
+    imprimeRecursive(_node->esquerda, outfile);
+    _node->v.print(outfile);
+    imprimeRecursive(_node->direita, outfile);
 }
 
 void DicionarioAVL::removeDic()
@@ -260,9 +260,4 @@ void DicionarioAVL::removeDicNode(Node *_node)
 {
     removeRecursive(this->root, _node->v.getVerbete());
     this->root = balanceTree(this->root);
-}
-
-int DicionarioAVL::pesquisa(std::string _verbete)
-{
-    return 1;
 }

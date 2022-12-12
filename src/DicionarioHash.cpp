@@ -20,11 +20,11 @@ int DicionarioHash::Hash(std::string _verbete) {
     return int(hashing) - 97;
 }
 
-void DicionarioHash::imprimeDic()
+void DicionarioHash::imprimeDic(std::ostream &outfile)
 {
     for (int i = 0; i < 27; i++)
     {
-        dicionario[i].print();
+        dicionario[i].print(outfile);
     }
     
 }
@@ -37,29 +37,15 @@ void DicionarioHash::removeDic()
     }
 }
 
-int DicionarioHash::pesquisa(std::string _verbete)
-{
-    int pos;
-    Verbete item;
-    pos = Hash(_verbete);
-    item = dicionario[pos].pesquisa(_verbete);
-
-    if (item.getVerbete() != "") {
-        return -1;
-    }
-
-    return 0;
-}
-
 void DicionarioHash::insere(Verbete it)
 {
     int pos;
     int aux;
 
-    aux = this->pesquisa(it.getVerbete());
+    pos = Hash(it.getVerbete());
+    aux = dicionario[pos].pesquisa(it.getVerbete(), it.getSignificado());
 
     if (aux == 0) {
-        pos = Hash(it.getVerbete());
         dicionario[pos].insere(it);
     }
 }
