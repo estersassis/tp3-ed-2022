@@ -18,10 +18,10 @@ class ListaEncadeada
         ListaEncadeada();
         // ~ListaEncadeada();
 
-        int pesquisa(std::string c, Significado sig);
+        int pesquisa(std::string c, Significado sig, char tipo);
         void insere(Verbete item);
-        int discoverPosition(std::string _verbete);
-        void remove(std::string _verbete);
+        int discoverPosition(std::string _verbete, char tipo);
+        void remove(std::string _verbete, char _tipo);
         void removeVerbetes();
 
         void limpa();

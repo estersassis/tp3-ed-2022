@@ -31,13 +31,15 @@ void ListaEncadeada::limpa()
     tamanho = 0;
 }
 
-void ListaEncadeada::remove(std::string _verbete) {
+void ListaEncadeada::remove(std::string _verbete, char _tipo) {
     Verbete aux;
     ListaCelula *p, *q;
     // Posiociona p na célula anterior ao item procurado
     p = primeiro;
-    while ((p->prox != NULL) && (p->prox->item.getVerbete() != _verbete))
+
+    while (((p->prox != NULL) && (p->prox->item.getVerbete() != _verbete)) || (p->prox->item.getType() != _tipo)){
         p = p->prox;
+    }
     // remove a célula contendo o item, retornando-o
     if (p->prox == NULL)
         throw "Erro: item não está presente";
@@ -61,28 +63,42 @@ void ListaEncadeada::removeVerbetes() {
     {
         if (p->item.getTam() > 0)
         {
-            this->remove(p->item.getVerbete());
+            this->remove(p->item.getVerbete(), p->item.getType());
         }
         
         p = p->prox;
     }
 }
 
-int ListaEncadeada::pesquisa(std::string c, Significado sig) {
+int ListaEncadeada::pesquisa(std::string c, Significado sig, char tipo)
+{
     ListaCelula *p;
     p = primeiro->prox;
+    int ret = -2;
+
     while (p != NULL)
     {
         
         if (p->item.getVerbete() == c)
         {
-            p->item.insertSiginificado(sig);
-            return -1;
+            if (p->item.getType() == tipo)
+            {
+                p->item.insertSiginificado(sig);
+                ret = -1;
+            }
+            
+            else {
+                ret = 1;
+            }
         }
         p = p->prox;
     }
+    if (ret == -1)
+        return ret;
+    else if (ret == 1)
+        return 1;
+    
     return 0;
-
 }
 
 ListaCelula *ListaEncadeada::posiciona(int pos, bool antes = false)
@@ -103,7 +119,7 @@ ListaCelula *ListaEncadeada::posiciona(int pos, bool antes = false)
     return p;
 }
 
-int ListaEncadeada::discoverPosition(std::string _verbete)
+int ListaEncadeada::discoverPosition(std::string _verbete, char tipo)
 {
     ListaCelula *p;
     p = this->primeiro;
@@ -115,14 +131,24 @@ int ListaEncadeada::discoverPosition(std::string _verbete)
         p = p->prox;
         count++;
     }
+    if (p->prox != NULL && p->prox->item.getVerbete() == _verbete)
+    {
+        p = p->prox;
+        count++;
+        if (p->prox != NULL && p->prox->item.getVerbete() == _verbete)
+        {
+            p = p->prox;
+            count++;
+        }
+    }   
 
     return count;
 }
 
 void ListaEncadeada::insere(Verbete item)
 {
-    int pos = this->discoverPosition(item.getVerbete());
-    
+    int pos = this->discoverPosition(item.getVerbete(), item.getType());
+
     ListaCelula *p, *nova;
     p = posiciona(pos, true);
 
