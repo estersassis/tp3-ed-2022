@@ -67,7 +67,7 @@ void Verbete::print(std::ostream &outfile)
     for (int i = 0; i < tam; i++)
     {
         int num = i + 1;
-        if (this->significados[i].getText() != " ")
+        if (this->significados[i].getText() != "")
         {
             outfile << num << ". " << this->significados[i].getText() << std::endl;
         }

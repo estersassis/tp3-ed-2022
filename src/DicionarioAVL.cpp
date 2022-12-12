@@ -266,6 +266,7 @@ Node *DicionarioAVL::removeRecursive(Node *_node, std::string key, char tipo){
         }
         else {
             _node->direita = removeRecursive(_node->direita, key, tipo);
+            _node->esquerda = removeRecursive(_node->esquerda, key, tipo);
         }
     }
 
