@@ -21,10 +21,17 @@ class DicionarioAVL : Dicionario
         void imprimeDic();
         void removeDic();
 
-        Node *rotations(Node *_node, char type);
+        Node *rotations(Node *_node, std::string type);
         Node *balance(Node *_node);
         Node *balanceTree(Node *_node);
         Node *insereRecursive(Node *_node, Verbete it);
+        Node *removeRecursive(Node *_node, std::string key);
+        Node *minValueNode(Node *_node);
+        void pesquisaMain();
+        void removeDicNode(Node *temp);
+        void pesquisaRecursive(Node *_node);
+        int diff(Node *temp);
+        int altura(Node *temp);
         void imprimeRecursive(Node *_node);
 };
 

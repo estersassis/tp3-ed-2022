@@ -55,4 +55,8 @@ int main() {
     avl.insere(f);
     avl.insere(g);
     avl.imprimeDic();
+    std::cout << "--------------------------" << std::endl;
+
+    avl.removeDic();
+    avl.imprimeDic();
 }
