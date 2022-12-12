@@ -19,6 +19,7 @@ class Verbete {
 
         std::string getVerbete();
         int getTam();
+        char getType();
         Significado getSignificado();
         void setTipo(char _tipo);
         void setVerbete(std::string _verbete);

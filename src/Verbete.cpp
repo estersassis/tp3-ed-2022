@@ -29,6 +29,11 @@ int Verbete::getTam()
     return this->tam;
 }
 
+char Verbete::getType()
+{
+    return this->tipo;
+}
+
 std::string Verbete::getVerbete()
 {
     return this->verbete;
@@ -57,11 +62,16 @@ void Verbete::insertSiginificado(Significado _significado)
 
 void Verbete::print(std::ostream &outfile)
 {
-    outfile << this->verbete.c_str() << "(" << this->tipo << ")" << std::endl;
+    outfile << this->verbete.c_str() << " (" << this->tipo << ")" << std::endl;
 
     for (int i = 0; i < tam; i++)
     {
         int num = i + 1;
-        outfile << num << ". " << this->significados[i].getText() << std::endl;
+        if (this->significados[i].getText() != " ")
+        {
+            outfile << num << ". " << this->significados[i].getText() << std::endl;
+        }
+        
+        
     }
 }

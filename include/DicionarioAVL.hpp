@@ -24,7 +24,7 @@ class DicionarioAVL : Dicionario
         Node *balance(Node *_node);
         Node *balanceTree(Node *_node);
         Node *insereRecursive(Node *_node, Verbete it);
-        Node *removeRecursive(Node *_node, std::string key);
+        Node *removeRecursive(Node *_node, std::string key, char tipo);
         Node *minValueNode(Node *_node);
         void pesquisaMain();
         void removeDicNode(Node *temp);

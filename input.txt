@@ -1,8 +1,7 @@
-a [available] obtainable
-a [awake]
-a [aware] mindful
-a [awful] dreadful, terrible
-a [awkward]
-a [bad] immoral, evil
-a [bad] below average in quality or performance, defective
-a [bad] spoiled, spoilt, capable of harming
+a [able] capable
+a [abnormal]
+a [absent]
+a [absolute] perfect or complete
+a [abstract] existing only in the mind,
+a [abundant] plentiful
+a [academic]

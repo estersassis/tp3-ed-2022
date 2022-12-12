@@ -157,7 +157,15 @@ Node *DicionarioAVL::insereRecursive(Node *_node, Verbete it)
                 _node->direita, it);
         }
         else  {
-            _node->v.insertSiginificado(it.getSignificado());
+            if (_node->v.getType() == it.getType())
+            {
+                _node->v.insertSiginificado(it.getSignificado());
+            }
+            else {
+                _node->direita = insereRecursive(
+                    _node->direita, it);
+            }
+            
         }
     }
     return _node;
@@ -217,41 +225,47 @@ Node *DicionarioAVL::minValueNode(Node *node)
     return current;
 }
 
-Node *DicionarioAVL::removeRecursive(Node *_node, std::string key){
+Node *DicionarioAVL::removeRecursive(Node *_node, std::string key, char tipo){
    
     if (_node == NULL)
         return _node;
 
     if (key < _node->v.getVerbete())
-        _node->esquerda = removeRecursive(_node->esquerda, key);
+        _node->esquerda = removeRecursive(_node->esquerda, key, tipo);
 
     else if (key > _node->v.getVerbete())
-        _node->direita = removeRecursive(_node->direita, key);
+        _node->direita = removeRecursive(_node->direita, key, tipo);
 
     else
     {
-        if ((_node->esquerda == NULL) ||
-            (_node->direita == NULL))
+        if (_node->v.getType() == tipo)
         {
-            Node *temp = _node->esquerda ? _node->esquerda : _node->direita;
-
-            if (temp == NULL)
+            if ((_node->esquerda == NULL) ||
+                (_node->direita == NULL))
             {
-                temp = _node;
-                _node = NULL;
-            }
-            else               
-                *_node = *temp; 
+                Node *temp = _node->esquerda ? _node->esquerda : _node->direita;
 
-            free(temp);
+                if (temp == NULL)
+                {
+                    temp = _node;
+                    _node = NULL;
+                }
+                else
+                    *_node = *temp;
+
+                free(temp);
+            }
+            else
+            {
+
+                Node *temp = minValueNode(_node->direita);
+                _node->v = temp->v;
+                _node->direita = removeRecursive(_node->direita,
+                                                 temp->v.getVerbete(), tipo);
+            }
         }
-        else
-        {
-            
-            Node *temp = minValueNode(_node->direita);  
-            _node->v = temp->v;
-            _node->direita = removeRecursive(_node->direita,
-                                             temp->v.getVerbete());
+        else {
+            _node->direita = removeRecursive(_node->direita, key, tipo);
         }
     }
 
@@ -263,5 +277,5 @@ Node *DicionarioAVL::removeRecursive(Node *_node, std::string key){
 
 void DicionarioAVL::removeDicNode(Node *_node)
 {
-    this->root = removeRecursive(this->root, _node->v.getVerbete());
+    this->root = removeRecursive(this->root, _node->v.getVerbete(), _node->v.getType());
 }
