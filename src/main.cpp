@@ -70,17 +70,16 @@ int main(int argc, char **argv)
 
     while (std::getline(inpfile, line))
         ++number_of_lines;
-    std::cout << "Tipo: " << number_of_lines << std::endl;
 
     inpfile.clear();
     inpfile.seekg(0, inpfile.beg);
 
+    DicionarioHash hash(number_of_lines);
+    DicionarioAVL avl(number_of_lines);
+
     switch (opchoose)
     {
         case HASH:
-
-            DicionarioHash hash(number_of_lines);
-            
 
             while (std::getline(inpfile, line))
             {
@@ -113,6 +112,42 @@ int main(int argc, char **argv)
             hash.imprimeDic(outfile);
             hash.removeDic();
             hash.imprimeDic(outfile);
+
+            outfile.close();
+            break;
+        
+        case AVL:
+
+            while (std::getline(inpfile, line))
+            {
+                Verbete aux(number_of_lines);
+                Significado aux_s;
+
+                tipo = line[0];
+                verb = line.substr(2, line.find("]"));
+                verb = verb.substr(verb.find("[") + 1, verb.find("]") - 1);
+
+                meaning = line.substr(line.find("]") + 1, std::string::npos);
+                meaning = meaning.substr(meaning.find(" ") + 1, std::string::npos);
+
+                aux.setVerbete(verb);
+                aux.setTipo(tipo);
+                if (meaning != "")
+                {
+                    aux_s.setText(meaning);
+                    aux.insertSiginificado(aux_s);
+                }
+
+                avl.insere(aux);
+            }
+            inpfile.close();
+
+            outfile.open(outfilename);
+            erroAssert(!outfile.fail(), "ERROR: COULDN'T OPEN THE INPUT FILE");
+
+            avl.imprimeDic(outfile);
+            avl.removeDic();
+            avl.imprimeDic(outfile);
 
             outfile.close();
             break;

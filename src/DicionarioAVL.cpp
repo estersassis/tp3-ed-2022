@@ -157,7 +157,7 @@ Node *DicionarioAVL::insereRecursive(Node *_node, Verbete it)
                 _node->direita, it);
         }
         else  {
-            throw "Erro: existe ja";
+            _node->v.insertSiginificado(it.getSignificado());
         }
     }
     return _node;
@@ -186,7 +186,10 @@ void DicionarioAVL::imprimeRecursive(Node *_node, std::ostream &outfile)
 
 void DicionarioAVL::removeDic()
 {
-    pesquisaRecursive(this->root);
+    for (int i = 0; i < tamanho; i++)
+    {
+        pesquisaRecursive(this->root);
+    }
 }
 
 void DicionarioAVL::pesquisaRecursive(Node *_node){
@@ -197,6 +200,7 @@ void DicionarioAVL::pesquisaRecursive(Node *_node){
     else if (_node->v.getTam() > 0)
     {
         removeDicNode(_node);
+        return;
     }
 
     pesquisaRecursive(_node->esquerda);
@@ -244,8 +248,8 @@ Node *DicionarioAVL::removeRecursive(Node *_node, std::string key){
         else
         {
             
-            Node *temp = minValueNode(_node->direita);
-            _node->v.getVerbete() = temp->v.getVerbete();
+            Node *temp = minValueNode(_node->direita);  
+            _node->v = temp->v;
             _node->direita = removeRecursive(_node->direita,
                                              temp->v.getVerbete());
         }
@@ -253,11 +257,11 @@ Node *DicionarioAVL::removeRecursive(Node *_node, std::string key){
 
     if (_node == NULL)
         return _node;
-    return _node;
+
+    return balance(_node);
 }
 
 void DicionarioAVL::removeDicNode(Node *_node)
 {
-    removeRecursive(this->root, _node->v.getVerbete());
-    this->root = balanceTree(this->root);
+    this->root = removeRecursive(this->root, _node->v.getVerbete());
 }
