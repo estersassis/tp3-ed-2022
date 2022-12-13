@@ -257,7 +257,6 @@ Node *DicionarioAVL::removeRecursive(Node *_node, std::string key, char tipo){
             }
             else
             {
-
                 Node *temp = minValueNode(_node->direita);
                 _node->v = temp->v;
                 _node->direita = removeRecursive(_node->direita,
