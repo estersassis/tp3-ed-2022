@@ -198,6 +198,7 @@ void DicionarioAVL::removeDic()
     {
         pesquisaRecursive(this->root);
     }
+    // 
 }
 
 void DicionarioAVL::pesquisaRecursive(Node *_node){
@@ -236,46 +237,44 @@ Node *DicionarioAVL::removeRecursive(Node *_node, std::string key, char tipo){
     else if (key > _node->v.getVerbete())
         _node->direita = removeRecursive(_node->direita, key, tipo);
 
-    else
-    {
+    else {
         if (_node->v.getType() == tipo)
         {
-            if ((_node->esquerda == NULL) ||
-                (_node->direita == NULL))
+
+            if (_node->direita == NULL && _node->esquerda == NULL)
             {
-                Node *temp = _node->esquerda ? _node->esquerda : _node->direita;
-
-                if (temp == NULL)
-                {
-                    temp = _node;
-                    _node = NULL;
-                }
-                else
-                    *_node = *temp;
-
-                free(temp);
+                return NULL;
             }
+            else if (_node->esquerda == NULL)
+            {
+                return _node->direita;
+            }
+            else if (_node->direita == NULL)
+            {
+                return _node->esquerda;
+            }
+
             else
             {
                 Node *temp = minValueNode(_node->direita);
                 _node->v = temp->v;
                 _node->direita = removeRecursive(_node->direita,
-                                                 temp->v.getVerbete(), tipo);
+                                                 temp->v.getVerbete(), temp->v.getType());
             }
         }
         else {
             _node->direita = removeRecursive(_node->direita, key, tipo);
             _node->esquerda = removeRecursive(_node->esquerda, key, tipo);
         }
+
     }
 
-    if (_node == NULL)
-        return _node;
 
-    return balance(_node);
+    return _node;
 }
 
 void DicionarioAVL::removeDicNode(Node *_node)
 {
     this->root = removeRecursive(this->root, _node->v.getVerbete(), _node->v.getType());
+    balance(this->root);
 }
