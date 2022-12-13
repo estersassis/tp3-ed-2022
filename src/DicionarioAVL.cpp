@@ -205,7 +205,7 @@ void DicionarioAVL::pesquisaRecursive(Node *_node){
         return;
     }
 
-    else if (_node->v.getTam() > 0)
+    else if (_node->v.getTam() >= 0) 
     {
         removeDicNode(_node);
         return;
