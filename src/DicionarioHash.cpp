@@ -35,7 +35,7 @@ void DicionarioHash::imprimeDic(std::ostream &outfile)
 {
     for (int i = 0; i < 53; i++)
     {
-        dicionario[i].print(outfile);
+        dicionario[i].printOut(outfile);
     }
 }
 
@@ -53,7 +53,7 @@ void DicionarioHash::insere(Verbete it)
     int aux;
 
     pos = Hash(it.getVerbete());
-    aux = dicionario[pos].pesquisa(it.getVerbete(), it.getSignificado(), it.getType());
+    aux = dicionario[pos].pesquisa(it.getVerbete(), it.getFirstSignificado(), it.getType());
 
     if (aux == 0 || aux == 1)
     {

@@ -18,7 +18,7 @@
 #include "msgassert.h"
 
 // variavel estatica de registro de acessos
-memlog_tipo ml;
+memlog_type ml;
 
 void clkDifMemLog(struct timespec t1, struct timespec t2, 
                    struct timespec * res)
@@ -61,9 +61,9 @@ int iniciaMemLog(char * nome)
   ml.fase = 0;
 
   // imprime registro inicial
-  int retprint = fprintf(ml.log,"I %ld %ld.%.9ld\n", 
+  int retprintOut = fprintf(ml.log,"I %ld %ld.%.9ld\n", 
                          ml.count,tp.tv_sec,tp.tv_nsec);
-  erroAssert(retprint>=0,"Nao foi possivel escrever registro");
+  erroAssert(retprintOut>=0,"Nao foi possivel escrever registro");
   return result;
 }
 
@@ -113,9 +113,9 @@ int leMemLog(long int pos, long int tam, int id)
   ml.count++;
 
   // imprime registro
-  int retprint = fprintf(ml.log,"L %d %ld %d %ld.%.9ld %ld %ld\n",
+  int retprintOut = fprintf(ml.log,"L %d %ld %d %ld.%.9ld %ld %ld\n",
           ml.fase, ml.count, id, tdif.tv_sec, tdif.tv_nsec, pos, tam);
-  erroAssert(retprint>=0,"Nao foi possivel escrever registro");
+  erroAssert(retprintOut>=0,"Nao foi possivel escrever registro");
   return result;
 }
 
@@ -138,9 +138,9 @@ int escreveMemLog(long int pos, long int tam, int id)
   ml.count++;
 
   // imprime registro
-  int retprint = fprintf(ml.log,"E %d %ld %d %ld.%.9ld %ld %ld\n",
+  int retprintOut = fprintf(ml.log,"E %d %ld %d %ld.%.9ld %ld %ld\n",
           ml.fase, ml.count, id, tdif.tv_sec, tdif.tv_nsec, pos, tam);
-  erroAssert(retprint>=0,"Nao foi possivel escrever registro");
+  erroAssert(retprintOut>=0,"Nao foi possivel escrever registro");
   return result;
 }
 
@@ -160,10 +160,10 @@ int finalizaMemLog()
   ml.count++;
 
   // imprime registros finais
-  int retprint = fprintf(ml.log,"F %ld %ld.%.9ld %ld.%.9ld\n",
+  int retprintOut = fprintf(ml.log,"F %ld %ld.%.9ld %ld.%.9ld\n",
                          ml.count, tp.tv_sec,tp.tv_nsec, 
 			 tdif.tv_sec,tdif.tv_nsec);
-  erroAssert(retprint>=0,"Nao foi possivel escrever registro");
+  erroAssert(retprintOut>=0,"Nao foi possivel escrever registro");
 
   // fecha arquivo de registro
   int retclose = fclose(ml.log);

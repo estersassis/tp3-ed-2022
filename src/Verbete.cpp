@@ -2,21 +2,21 @@
 #include "Significado.hpp"
 #include <iostream>
 
-Verbete::Verbete(int _n) {
-    this->n = _n;
-    this->tam = 0;
-    this->tipo = '?';
+Verbete::Verbete(int _size) {
+    this->size = _size;
+
+    this->qtd_significados = 0;
+    this->type = '?';
     this->verbete = "";
 
-    this->significados = new Significado[_n];
-
-    for (int i = 0; i < _n; i++) {
+    this->significados = new Significado[_size];
+    for (int i = 0; i < _size; i++) {
         this->significados[i] = Significado();
     }
 }
-Verbete::Verbete()
-{
-    this->tam = 0;
+
+Verbete::Verbete() {
+    this->qtd_significados = 0;
     this->verbete = "";
 
     this->significados = new Significado[1];
@@ -24,54 +24,45 @@ Verbete::Verbete()
 
 }
 
-int Verbete::getTam()
-{
-    return this->tam;
+int Verbete::getQtdSignificados() {
+    return this->qtd_significados;
 }
 
-char Verbete::getType()
-{
-    return this->tipo;
+char Verbete::getType() {
+    return this->type;
 }
 
-std::string Verbete::getVerbete()
-{
+std::string Verbete::getVerbete() {
     return this->verbete;
 }
 
-Significado Verbete::getSignificado()
-{
+Significado Verbete::getFirstSignificado() {
     return this->significados[0];
 }
 
-void Verbete::setTipo(char _tipo)
-{
-    this->tipo = _tipo;
+void Verbete::setType(char _type) {
+    this->type = _type;
 }
 
-void Verbete::setVerbete(std::string _verbete)
-{
+void Verbete::setVerbete(std::string _verbete) {
     this->verbete = _verbete;
 }
 
-void Verbete::insertSiginificado(Significado _significado)
-{
-    this->significados[tam] = _significado;
-    tam++;  
+void Verbete::insertSiginificado(Significado _significado) {
+    this->significados[qtd_significados] = _significado;
+
+    qtd_significados++;  
 }
 
-void Verbete::print(std::ostream &outfile)
-{
-    outfile << this->verbete.c_str() << " (" << this->tipo << ")" << std::endl;
+void Verbete::printOut(std::ostream &outfile) {
 
-    for (int i = 0; i < tam; i++)
-    {
+    outfile << this->verbete.c_str() << " (" << this->type << ")" << std::endl;
+
+    for (int i = 0; i < qtd_significados; i++) {
         int num = i + 1;
-        if (this->significados[i].getText() != "")
-        {
+
+        if (this->significados[i].getText() != "") {
             outfile << num << ". " << this->significados[i].getText() << std::endl;
         }
-        
-        
     }
 }

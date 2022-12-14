@@ -62,7 +62,7 @@ int main(int argc, char **argv)
     inpfile.open(inpfilename);
     erroAssert(!inpfile.fail(), "ERROR: COULDN'T OPEN THE INPUT FILE");
 
-    char tipo;
+    char type;
     std::string verb;
     std::string meaning;
     std::string line;
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
                 Verbete aux(number_of_lines);
                 Significado aux_s;
 
-                tipo = line[0];
+                type = line[0];
                 verb = line.substr(2, line.find("]"));
                 verb = verb.substr(verb.find("[") + 1, verb.find("]")-1);
                 
@@ -94,7 +94,7 @@ int main(int argc, char **argv)
                 meaning = meaning.substr(meaning.find(" ") + 1, std::string::npos);
 
                 aux.setVerbete(verb);
-                aux.setTipo(tipo);
+                aux.setType(type);
                 if (meaning != "")
                 {
                     aux_s.setText(meaning);
@@ -123,7 +123,7 @@ int main(int argc, char **argv)
                 Verbete aux(number_of_lines);
                 Significado aux_s;
 
-                tipo = line[0];
+                type = line[0];
                 verb = line.substr(2, line.find("]"));
                 verb = verb.substr(verb.find("[") + 1, verb.find("]") - 1);
 
@@ -131,7 +131,7 @@ int main(int argc, char **argv)
                 meaning = meaning.substr(meaning.find(" ") + 1, std::string::npos);
 
                 aux.setVerbete(verb);
-                aux.setTipo(tipo);
+                aux.setType(type);
                 if (meaning != "")
                 {
                     aux_s.setText(meaning);

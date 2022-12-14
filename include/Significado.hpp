@@ -9,6 +9,7 @@ class Significado {
 
     public:
         Significado();
+
         std::string getText();
         void setText(std::string _text);
 };

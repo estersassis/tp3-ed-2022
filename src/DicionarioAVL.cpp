@@ -159,7 +159,7 @@ Node *DicionarioAVL::insereRecursive(Node *_node, Verbete it)
         else  {
             if (_node->v.getType() == it.getType())
             {
-                _node->v.insertSiginificado(it.getSignificado());
+                _node->v.insertSiginificado(it.getFirstSignificado());
             }
             else {
                 _node->direita = insereRecursive(
@@ -184,11 +184,11 @@ void DicionarioAVL::imprimeRecursive(Node *_node, std::ostream &outfile)
     }
     
     if (_node->direita == NULL && _node->esquerda == NULL) {
-        _node->v.print(outfile);
+        _node->v.printOut(outfile);
         return;
     }
     imprimeRecursive(_node->esquerda, outfile);
-    _node->v.print(outfile);
+    _node->v.printOut(outfile);
     imprimeRecursive(_node->direita, outfile);
 }
 
@@ -206,7 +206,7 @@ void DicionarioAVL::pesquisaRecursive(Node *_node){
         return;
     }
 
-    else if (_node->v.getTam() > 0)
+    else if (_node->v.getQtdSignificados() > 0)
     {
         removeDicNode(_node);
         return;
@@ -226,19 +226,19 @@ Node *DicionarioAVL::minValueNode(Node *node)
     return current;
 }
 
-Node *DicionarioAVL::removeRecursive(Node *_node, std::string key, char tipo){
+Node *DicionarioAVL::removeRecursive(Node *_node, std::string key, char type){
    
     if (_node == NULL)
         return _node;
 
     if (key < _node->v.getVerbete())
-        _node->esquerda = removeRecursive(_node->esquerda, key, tipo);
+        _node->esquerda = removeRecursive(_node->esquerda, key, type);
 
     else if (key > _node->v.getVerbete())
-        _node->direita = removeRecursive(_node->direita, key, tipo);
+        _node->direita = removeRecursive(_node->direita, key, type);
 
     else {
-        if (_node->v.getType() == tipo)
+        if (_node->v.getType() == type)
         {
 
             if (_node->direita == NULL && _node->esquerda == NULL)
@@ -263,8 +263,8 @@ Node *DicionarioAVL::removeRecursive(Node *_node, std::string key, char tipo){
             }
         }
         else {
-            _node->direita = removeRecursive(_node->direita, key, tipo);
-            _node->esquerda = removeRecursive(_node->esquerda, key, tipo);
+            _node->direita = removeRecursive(_node->direita, key, type);
+            _node->esquerda = removeRecursive(_node->esquerda, key, type);
         }
 
     }

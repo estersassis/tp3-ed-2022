@@ -31,13 +31,13 @@ void ListaEncadeada::limpa()
     tamanho = 0;
 }
 
-void ListaEncadeada::remove(std::string _verbete, char _tipo) {
+void ListaEncadeada::remove(std::string _verbete, char _type) {
     Verbete aux;
     ListaCelula *p, *q;
     // Posiociona p na célula anterior ao item procurado
     p = primeiro;
 
-    while (((p->prox != NULL) && (p->prox->item.getVerbete() != _verbete)) || (p->prox->item.getType() != _tipo)){
+    while (((p->prox != NULL) && (p->prox->item.getVerbete() != _verbete)) || (p->prox->item.getType() != _type)){
         p = p->prox;
     }
     // remove a célula contendo o item, retornando-o
@@ -61,7 +61,7 @@ void ListaEncadeada::removeVerbetes() {
 
     while (p != NULL)
     {
-        if (p->item.getTam() > 0)
+        if (p->item.getQtdSignificados() > 0)
         {
             this->remove(p->item.getVerbete(), p->item.getType());
         }
@@ -70,7 +70,7 @@ void ListaEncadeada::removeVerbetes() {
     }
 }
 
-int ListaEncadeada::pesquisa(std::string c, Significado sig, char tipo)
+int ListaEncadeada::pesquisa(std::string c, Significado sig, char type)
 {
     ListaCelula *p;
     p = primeiro->prox;
@@ -81,7 +81,7 @@ int ListaEncadeada::pesquisa(std::string c, Significado sig, char tipo)
         
         if (p->item.getVerbete() == c)
         {
-            if (p->item.getType() == tipo)
+            if (p->item.getType() == type)
             {
                 p->item.insertSiginificado(sig);
                 ret = -1;
@@ -119,7 +119,7 @@ ListaCelula *ListaEncadeada::posiciona(int pos, bool antes = false)
     return p;
 }
 
-int ListaEncadeada::discoverPosition(std::string _verbete, char tipo)
+int ListaEncadeada::discoverPosition(std::string _verbete, char type)
 {
     ListaCelula *p;
     p = this->primeiro;
@@ -165,14 +165,14 @@ void ListaEncadeada::insere(Verbete item)
     
 };
 
-void ListaEncadeada::print(std::ostream &outfile)
+void ListaEncadeada::printOut(std::ostream &outfile)
 {
     ListaCelula *p;
     p = primeiro;
 
     while (p->prox != NULL)
     {
-        p->prox->item.print(outfile);
+        p->prox->item.printOut(outfile);
         p = p->prox;
     }
 }

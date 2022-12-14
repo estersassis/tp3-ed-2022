@@ -6,24 +6,24 @@
 class Verbete {
 
     private:
-        char tipo;
+        char type;
         std::string verbete;
-        int n, tam;
+        int size, qtd_significados;
         Significado *significados;
 
     public:
-        Verbete(int _n);
+        Verbete(int _size);
         Verbete();
 
-        void print(std::ostream &outfile);
-
-        std::string getVerbete();
-        int getTam();
         char getType();
-        Significado getSignificado();
-        void setTipo(char _tipo);
+        std::string getVerbete();
+        int getQtdSignificados();
+        Significado getFirstSignificado();
+
+        void setType(char _type);
         void setVerbete(std::string _verbete);
 
+        void printOut(std::ostream &outfile);
         void insertSiginificado(Significado _significado);
 };
 

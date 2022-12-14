@@ -24,8 +24,8 @@ typedef struct memlog{
 	long count;
 	int fase;
 	int ativo;
-} memlog_tipo;
-extern memlog_tipo ml;
+} memlog_type;
+extern memlog_type ml;
 
 // constantes definindo os estados de registro
 #define MLATIVO 1
@@ -35,7 +35,7 @@ extern memlog_tipo ml;
 #define LEMEMLOG(pos,tam,id) ((void) ((ml.ativo==MLATIVO)?leMemLog(pos,tam,id):0))
 #define ESCREVEMEMLOG(pos,tam,id) ((void) ((ml.ativo==MLATIVO)?escreveMemLog(pos,tam,id):0))
 
-// prototipos das funcoes
+// prototypes das funcoes
 
 int iniciaMemLog(char * nome);
 int ativaMemLog();

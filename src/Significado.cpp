@@ -1,5 +1,4 @@
 #include "Significado.hpp"
-#include <iostream>
 
 Significado::Significado() {}
 
